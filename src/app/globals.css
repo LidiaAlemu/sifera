@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --olive: #5A5B44;
+    --cream: #F3EEE7;
+    --dark: #2F2B24;
+    --gold: #C7A86A;
+    --beige: #E8D8C1;
+  }
+
+  body {
+    @apply bg-cream text-dark font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}

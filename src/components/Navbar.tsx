@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -16,6 +17,7 @@ const navLinks = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { user, loading, signOut } = useAuth();
 
   return (
     <header className="bg-olive text-white shadow-sm">
@@ -48,18 +50,36 @@ export default function Navbar() {
 
           {/* Auth Buttons (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/login"
-              className="text-sm font-sans text-white hover:text-gold-light transition-colors"
-            >
-              Login
-            </Link>
-            <Link
-              href="/signup"
-              className="px-4 py-2 bg-beige text-dark text-sm font-sans rounded-lg hover:bg-beige-dark transition-colors"
-            >
-              Sign Up
-            </Link>
+            {loading ? (
+              <div className="w-16 h-8 bg-olive-dark rounded animate-pulse" />
+            ) : user ? (
+              <>
+                <span className="text-sm font-sans text-cream">
+                  {user.user_metadata?.full_name || user.email}
+                </span>
+                <button
+                  onClick={signOut}
+                  className="text-sm font-sans text-white hover:text-gold-light transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm font-sans text-white hover:text-gold-light transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className="px-4 py-2 bg-beige text-dark text-sm font-sans rounded-lg hover:bg-beige-dark transition-colors"
+                >
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger */}
@@ -96,20 +116,41 @@ export default function Navbar() {
               </Link>
             ))}
             <div className="pt-2 flex flex-col space-y-2">
-              <Link
-                href="/login"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-sans text-white hover:bg-olive-dark rounded-md"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2 text-sm font-sans bg-beige text-dark rounded-md hover:bg-beige-dark text-center"
-              >
-                Sign Up
-              </Link>
+              {loading ? (
+                <div className="px-3 py-2 text-sm text-cream">Loading…</div>
+              ) : user ? (
+                <>
+                  <span className="px-3 py-2 text-sm text-cream">
+                    {user.user_metadata?.full_name || user.email}
+                  </span>
+                  <button
+                    onClick={() => {
+                      signOut();
+                      setMobileOpen(false);
+                    }}
+                    className="px-3 py-2 text-sm text-left text-white hover:bg-olive-dark rounded-md"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="px-3 py-2 text-sm font-sans text-white hover:bg-olive-dark rounded-md"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setMobileOpen(false)}
+                    className="px-3 py-2 text-sm font-sans bg-beige text-dark rounded-md hover:bg-beige-dark text-center"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

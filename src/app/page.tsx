@@ -1,14 +1,21 @@
-import { testConnection } from "@/actions/testConnection";
+import Hero from "@/components/Hero";
+import Features from "@/components/Features";
+import FeaturedMenu from "@/components/FeaturedMenu";
+import About from "@/components/About";
+import UpcomingEvents from "@/components/UpcomingEvents";
+import BooksPreview from "@/components/BooksPreview";
+import MembershipPreview from "@/components/MembershipPreview";
 
-export default async function Home() {
-  const result = await testConnection();
-
+export default function Home() {
   return (
-    <main className="p-8">
-      <h1 className="text-2xl font-serif">Supabase Connection Test</h1>
-      <pre className="mt-4 p-4 bg-white rounded">
-        {JSON.stringify(result, null, 2)}
-      </pre>
-    </main>
+    <>
+      <Hero />
+      <Features />
+      <FeaturedMenu />
+      <About />
+      <UpcomingEvents />
+      <BooksPreview />
+      <MembershipPreview />
+    </>
   );
 }

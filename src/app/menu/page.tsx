@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useCart } from "@/contexts/CartContext";
 
 const allItems = [
   {
@@ -139,6 +140,7 @@ const categories = [
 export default function MenuPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const { addItem } = useCart();
 
   const filtered = allItems.filter((item) => {
     const matchesSearch = item.name.toLowerCase().includes(search.toLowerCase());
@@ -148,7 +150,12 @@ export default function MenuPage() {
   });
 
   const handleAddToCart = (item: any) => {
-    alert(`"${item.name}" added to cart! (Cart system coming in next step)`);
+    addItem({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+    });
   };
 
   return (

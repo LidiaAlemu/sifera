@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useCart } from "@/contexts/CartContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -18,12 +19,13 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const { user, loading, signOut } = useAuth();
+  const { totalItems } = useCart();
 
   return (
     <header className="bg-olive text-white shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo / Brand */}
+          {/* Logo */}
           <Link
             href="/"
             className="text-2xl font-serif font-bold text-gold hover:text-gold-light transition-colors"
@@ -48,8 +50,34 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Auth Buttons (Desktop) */}
+          {/* Cart + Auth Buttons (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Cart */}
+            <Link
+              href="/cart"
+              className="relative text-white hover:text-gold-light transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+                />
+              </svg>
+              {totalItems > 0 && (
+                <span className="absolute -top-2 -right-2 bg-gold text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
+
             {loading ? (
               <div className="w-16 h-8 bg-olive-dark rounded animate-pulse" />
             ) : user ? (
@@ -88,11 +116,26 @@ export default function Navbar() {
             className="md:hidden p-2 text-white hover:text-gold-light"
             aria-label="Toggle menu"
           >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               {mobileOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               )}
             </svg>
           </button>
@@ -115,6 +158,14 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {/* Cart in mobile */}
+            <Link
+              href="/cart"
+              onClick={() => setMobileOpen(false)}
+              className="block px-3 py-2 text-base font-sans text-white hover:bg-olive-dark rounded-md"
+            >
+              Cart ({totalItems})
+            </Link>
             <div className="pt-2 flex flex-col space-y-2">
               {loading ? (
                 <div className="px-3 py-2 text-sm text-cream">Loading…</div>

@@ -33,7 +33,7 @@ export async function getOrderByNumber(orderNumber: string) {
     throw new Error("Order not found");
   }
 
-  // Transform order_items so that each item has a single menu_item object, not an array
+  // Flatten menu_item so it's never an array
   const transformedOrder = {
     ...data,
     order_items: data.order_items.map((item: any) => ({
@@ -43,5 +43,23 @@ export async function getOrderByNumber(orderNumber: string) {
     })),
   };
 
-  return transformedOrder;
+  return transformedOrder as {
+    id: string;
+    order_number: string;
+    guest_name: string;
+    guest_phone: string;
+    guest_email: string;
+    subtotal: number;
+    total_amount: number;
+    payment_method: string;
+    order_status: string;
+    pickup_time: string;
+    created_at: string;
+    notes: string;
+    order_items: {
+      quantity: number;
+      unit_price: number;
+      menu_item: { name: string } | null;
+    }[];
+  };
 }

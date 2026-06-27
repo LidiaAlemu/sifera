@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 export async function getOrderByNumber(orderNumber: string) {
   const supabase = await createClient();
 
-  const { data: order, error } = await supabase
+  const { data, error } = await supabase
     .from("orders")
     .select(`
       id,
@@ -29,10 +29,19 @@ export async function getOrderByNumber(orderNumber: string) {
     .eq("order_number", orderNumber)
     .single();
 
-  if (error || !order) {
-    console.error("Order fetch error:", error);
+  if (error || !data) {
     throw new Error("Order not found");
   }
 
-  return order;
+  // Transform order_items so that each item has a single menu_item object, not an array
+  const transformedOrder = {
+    ...data,
+    order_items: data.order_items.map((item: any) => ({
+      quantity: item.quantity,
+      unit_price: item.unit_price,
+      menu_item: Array.isArray(item.menu_item) ? item.menu_item[0] : item.menu_item,
+    })),
+  };
+
+  return transformedOrder;
 }

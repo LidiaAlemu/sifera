@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -26,7 +26,7 @@ type Order = {
   }[];
 };
 
-export default function OrdersPage() {
+function OrdersContent() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get("orderNumber");
 
@@ -332,5 +332,19 @@ export default function OrdersPage() {
         )}
       </div>
     </section>
+  );
+}
+
+export default function OrdersPage() {
+  return (
+    <Suspense fallback={
+      <section className="bg-cream min-h-screen py-12 md:py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-dark/60 font-sans">Loading…</p>
+        </div>
+      </section>
+    }>
+      <OrdersContent />
+    </Suspense>
   );
 }

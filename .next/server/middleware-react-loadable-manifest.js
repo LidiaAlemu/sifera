@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"app\\\\orders\\\\page.tsx -> @/actions/uploadReceipt\":{\"id\":\"app\\\\orders\\\\page.tsx -> @/actions/uploadReceipt\",\"files\":[\"static/chunks/_app-pages-browser_src_actions_uploadReceipt_ts.js\"]}}"

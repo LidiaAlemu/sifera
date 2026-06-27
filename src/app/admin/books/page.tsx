@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+export const dynamic = 'force-dynamic';
+
 type Book = {
   id: number;
   title: string;

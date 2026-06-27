@@ -3,6 +3,8 @@
 import { useCart } from "@/contexts/CartContext";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic';
+
 export default function CartPage() {
   const { items, removeItem, updateQuantity, clearCart, subtotal, totalItems } =
     useCart();

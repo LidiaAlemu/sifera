@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { getMembershipData, updatePlan, addPlan } from "@/actions/admin/membership";
 
+export const dynamic = 'force-dynamic';
+
 type Plan = {
   id: string;
   name: string;

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+export const dynamic = 'force-dynamic';
+
 export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

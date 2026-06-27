@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+export const dynamic = 'force-dynamic';
+
 const popularItems = [
   { name: "Latte", sold: 45, revenue: "3,825 ETB" },
   { name: "Cappuccino", sold: 38, revenue: "3,420 ETB" },

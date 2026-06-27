@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+export const dynamic = 'force-dynamic';
+
 // Temporary admin credentials (will be replaced with Supabase auth later)
 const ADMIN_EMAIL = "admin@sifera.et";
 const ADMIN_PASSWORD = "sifera2026";

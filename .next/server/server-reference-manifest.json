@@ -1,22 +1,5 @@
 {
-  "node": {
-    "d39bada5e74f0c94be552fd593096fba09aac2c9": {
-      "workers": {
-        "app/events/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Cevents.ts%22%2C%5B%22getEventsData%22%5D%5D%5D&__client_imported__=!"
-      },
-      "layer": {
-        "app/events/page": "rsc"
-      }
-    },
-    "8df26f73c37adee54a11d7b5892d25dc264a6a25": {
-      "workers": {
-        "app/menu/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Cmenu.ts%22%2C%5B%22getMenuData%22%5D%5D%5D&__client_imported__=!"
-      },
-      "layer": {
-        "app/menu/page": "rsc"
-      }
-    }
-  },
+  "node": {},
   "edge": {},
-  "encryptionKey": "NvAVfUQPYlWXgZhoYH0LQeGe5kQ46T+2snjiDnZm8Yk="
+  "encryptionKey": "DNql7oSlLknDnONyQKF9JedO6KdKzti2ADVYVfKofI0="
 }

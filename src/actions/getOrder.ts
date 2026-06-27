@@ -33,33 +33,26 @@ export async function getOrderByNumber(orderNumber: string) {
     throw new Error("Order not found");
   }
 
-  // Flatten menu_item so it's never an array
-  const transformedOrder = {
-    ...data,
-    order_items: data.order_items.map((item: any) => ({
-      quantity: item.quantity,
-      unit_price: item.unit_price,
-      menu_item: Array.isArray(item.menu_item) ? item.menu_item[0] : item.menu_item,
-    })),
-  };
+  // Safely extract menu_item (it might come as an array)
+  const safeItems = (data.order_items || []).map((item: any) => ({
+    quantity: item.quantity,
+    unit_price: item.unit_price,
+    menu_item: Array.isArray(item.menu_item) ? (item.menu_item[0] || null) : item.menu_item,
+  }));
 
-  return transformedOrder as {
-    id: string;
-    order_number: string;
-    guest_name: string;
-    guest_phone: string;
-    guest_email: string;
-    subtotal: number;
-    total_amount: number;
-    payment_method: string;
-    order_status: string;
-    pickup_time: string;
-    created_at: string;
-    notes: string;
-    order_items: {
-      quantity: number;
-      unit_price: number;
-      menu_item: { name: string } | null;
-    }[];
+  return {
+    id: data.id,
+    order_number: data.order_number,
+    guest_name: data.guest_name,
+    guest_phone: data.guest_phone,
+    guest_email: data.guest_email,
+    subtotal: data.subtotal,
+    total_amount: data.total_amount,
+    payment_method: data.payment_method,
+    order_status: data.order_status,
+    pickup_time: data.pickup_time,
+    created_at: data.created_at,
+    notes: data.notes,
+    order_items: safeItems,
   };
 }

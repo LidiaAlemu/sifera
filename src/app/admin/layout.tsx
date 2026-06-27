@@ -6,12 +6,14 @@ import Link from "next/link";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: "📊" },
-  { href: "/admin/customers", label: "Customers", icon: "👥" },
-  { href: "/admin/menu", label: "Menu", icon: "☕" },
-  { href: "/admin/members", label: "Members", icon: "⭐" },
+  { href: "/admin/orders", label: "Orders", icon: "🧾" },
+  { href: "/admin/menu", label: "Menu Management", icon: "☕" },
+  { href: "/admin/customers", label: "Customers & Members", icon: "👥" },
+  { href: "/admin/members", label: "Memberships", icon: "⭐" },
   { href: "/admin/books", label: "Books", icon: "📚" },
   { href: "/admin/events", label: "Events", icon: "📅" },
-  { href: "/admin/reports", label: "Reports", icon: "📈" },
+  { href: "/admin/payments", label: "Payments", icon: "💳" },
+  { href: "/admin/analytics", label: "Analytics", icon: "📈" },
   { href: "/admin/settings", label: "Settings", icon: "⚙️" },
 ];
 
@@ -24,13 +26,19 @@ export default function AdminLayout({
   const pathname = usePathname();
   const [admin, setAdmin] = useState<any>(null);
 
+  // Temporarily bypass admin login – will be re-enabled later
+  // useEffect(() => {
+  //   const session = localStorage.getItem("sifera-admin-session");
+  //   if (!session) {
+  //     router.push("/admin/login");
+  //   } else {
+  //     setAdmin(JSON.parse(session));
+  //   }
+  // }, []);
+
+  // Simulate a logged-in admin
   useEffect(() => {
-    const session = localStorage.getItem("sifera-admin-session");
-    if (!session) {
-      router.push("/admin/login");
-    } else {
-      setAdmin(JSON.parse(session));
-    }
+    setAdmin({ email: "admin@sifera.et", role: "Owner" });
   }, []);
 
   const handleLogout = () => {
@@ -38,7 +46,7 @@ export default function AdminLayout({
     router.push("/admin/login");
   };
 
-  if (!admin) return null; // loading or redirecting
+  if (!admin) return null;
 
   return (
     <div className="min-h-screen bg-cream flex">
@@ -66,8 +74,27 @@ export default function AdminLayout({
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-olive-dark">
-          <p className="text-xs font-sans text-cream/60 mb-2">{admin.email}</p>
+        <div className="p-4 border-t border-olive-dark space-y-3">
+          {/* Admin info */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-gold/30 rounded-full flex items-center justify-center text-xs font-bold text-gold">
+              {admin?.email?.charAt(0).toUpperCase() || "A"}
+            </div>
+            <div>
+              <p className="text-xs font-sans text-cream">{admin.email}</p>
+              <p className="text-xs font-sans text-cream/60">Owner</p>
+            </div>
+          </div>
+          {/* View Website */}
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-xs font-sans text-gold hover:text-gold-light transition-colors"
+          >
+            🔗 View Website
+          </a>
+          {/* Logout */}
           <button
             onClick={handleLogout}
             className="text-xs font-sans text-cream hover:text-gold-light transition-colors"

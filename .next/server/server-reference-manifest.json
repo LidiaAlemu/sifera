@@ -1,24 +1,16 @@
 {
   "node": {
-    "8df26f73c37adee54a11d7b5892d25dc264a6a25": {
+    "dabc577e4665d7728d8edb151dc019aeef18a0f4": {
       "workers": {
-        "app/menu/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Cmenu.ts%22%2C%5B%22getMenuData%22%5D%5D%5D&__client_imported__=!"
+        "app/orders/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Csettings.ts%22%2C%5B%22getPaymentSettings%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CuploadReceipt.ts%22%2C%5B%22uploadReceipt%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CgetOrder.ts%22%2C%5B%22getOrderByNumber%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
-        "app/menu/page": "rsc"
-      }
-    },
-    "07e5d142918c636fd3a93fab9608bc703a0e612c": {
-      "workers": {
-        "app/checkout/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Corders.ts%22%2C%5B%22placeOrder%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/checkout/page": "action-browser"
+        "app/orders/page": "action-browser"
       }
     },
     "0b403e24abde8d38cccada8f9768b48a6cebfb3a": {
       "workers": {
-        "app/orders/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CuploadReceipt.ts%22%2C%5B%22uploadReceipt%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CgetOrder.ts%22%2C%5B%22getOrderByNumber%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Csettings.ts%22%2C%5B%22getPaymentSettings%22%5D%5D%5D&__client_imported__=true!"
+        "app/orders/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Csettings.ts%22%2C%5B%22getPaymentSettings%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CuploadReceipt.ts%22%2C%5B%22uploadReceipt%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CgetOrder.ts%22%2C%5B%22getOrderByNumber%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/orders/page": "action-browser"
@@ -26,15 +18,7 @@
     },
     "52213a9dcbfb5700891e507e29aa20997f9ebcbf": {
       "workers": {
-        "app/orders/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CuploadReceipt.ts%22%2C%5B%22uploadReceipt%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CgetOrder.ts%22%2C%5B%22getOrderByNumber%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Csettings.ts%22%2C%5B%22getPaymentSettings%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/orders/page": "action-browser"
-      }
-    },
-    "dabc577e4665d7728d8edb151dc019aeef18a0f4": {
-      "workers": {
-        "app/orders/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CuploadReceipt.ts%22%2C%5B%22uploadReceipt%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CgetOrder.ts%22%2C%5B%22getOrderByNumber%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Csettings.ts%22%2C%5B%22getPaymentSettings%22%5D%5D%5D&__client_imported__=true!"
+        "app/orders/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Csettings.ts%22%2C%5B%22getPaymentSettings%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CuploadReceipt.ts%22%2C%5B%22uploadReceipt%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5CgetOrder.ts%22%2C%5B%22getOrderByNumber%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/orders/page": "action-browser"
@@ -42,5 +26,5 @@
     }
   },
   "edge": {},
-  "encryptionKey": "pUqMxoK+thCdJurifaNG1kA7L2mYiROrm+95UlOjr6k="
+  "encryptionKey": "XDsazS5omwyQFN6zY7uhUcsvPlUdxDlH3unWF6iQ5Dg="
 }

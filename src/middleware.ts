@@ -1,11 +1,10 @@
-import { updateSession } from "@/lib/supabase/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
 export const runtime = 'nodejs';
 
 export async function middleware(request: NextRequest) {
-  // Update session first
-  return await updateSession(request);
+  // Temporarily disable Supabase session refresh to isolate redirect loop
+  return NextResponse.next();
 }
 
 export const config = {

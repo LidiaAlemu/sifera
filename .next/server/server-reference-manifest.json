@@ -1,5 +1,28 @@
 {
-  "node": {},
+  "node": {
+    "00dd828fe8c3c25c307738a54b9639211255969130": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Cadmin%5C%5Corders.ts%22%2C%5B%5B%2200dd828fe8c3c25c307738a54b9639211255969130%22%2C%22getAdminOrders%22%5D%2C%5B%2260c6154e4ce2e3d257fe2b5f2159a5a87f29c6c22f%22%2C%22updateOrderStatus%22%5D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      }
+    },
+    "60c6154e4ce2e3d257fe2b5f2159a5a87f29c6c22f": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5C13013%5C%5CProjects%5C%5Csifera%5C%5Csrc%5C%5Cactions%5C%5Cadmin%5C%5Corders.ts%22%2C%5B%5B%2200dd828fe8c3c25c307738a54b9639211255969130%22%2C%22getAdminOrders%22%5D%2C%5B%2260c6154e4ce2e3d257fe2b5f2159a5a87f29c6c22f%22%2C%22updateOrderStatus%22%5D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/admin/page": "action-browser"
+      }
+    }
+  },
   "edge": {},
-  "encryptionKey": "K02iLkwkcCiZsdJP5SaMYn18L5YgrzCnZdN7sfwK814="
+  "encryptionKey": "Iz0PBtkBHMbDzFmUzt9ibvosjx+c9wE1UpArJwrqnS8="
 }

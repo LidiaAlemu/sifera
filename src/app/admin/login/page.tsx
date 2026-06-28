@@ -2,12 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 export const dynamic = 'force-dynamic';
-
-// Temporary admin credentials (will be replaced with Supabase auth later)
-const ADMIN_EMAIL = "admin@sifera.et";
-const ADMIN_PASSWORD = "sifera2026";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -21,15 +18,36 @@ export default function AdminLoginPage() {
     setError("");
     setLoading(true);
 
-    // Simulate login delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      // Store admin session in localStorage for now
-      localStorage.setItem("sifera-admin-session", JSON.stringify({ email, role: "Owner" }));
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
+
+      // Check if user has staff record
+      const { data: staffData, error: staffError } = await supabase
+        .from("staff")
+        .select("*")
+        .eq("user_id", data.user.id)
+        .eq("status", "active")
+        .single();
+
+      if (staffError || !staffData) {
+        await supabase.auth.signOut();
+        setError("You do not have admin access.");
+        setLoading(false);
+        return;
+      }
+
       router.push("/admin");
-    } else {
-      setError("Invalid email or password.");
+    } catch (err) {
+      setError("An error occurred during login.");
       setLoading(false);
     }
   };

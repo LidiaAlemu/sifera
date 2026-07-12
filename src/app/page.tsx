@@ -4,7 +4,6 @@ import FeaturedMenu from "@/components/FeaturedMenu";
 import About from "@/components/About";
 import UpcomingEvents from "@/components/UpcomingEvents";
 import BooksPreview from "@/components/BooksPreview";
-import MembershipPreview from "@/components/MembershipPreview";
 
 export default function Home() {
   return (
@@ -15,7 +14,6 @@ export default function Home() {
       <About />
       <UpcomingEvents />
       <BooksPreview />
-      <MembershipPreview />
     </>
   );
 }

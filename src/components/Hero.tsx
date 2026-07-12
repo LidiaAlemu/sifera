@@ -49,12 +49,6 @@ export default function Hero() {
               >
                 Order Now
               </Link>
-              <Link
-                href="/membership"
-                className="px-8 py-3 border border-beige text-beige font-sans font-semibold rounded-lg hover:bg-beige hover:text-dark transition-colors"
-              >
-                Become a Member
-              </Link>
             </div>
           </div>
 

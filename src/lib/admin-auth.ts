@@ -200,7 +200,6 @@ export const ROUTE_PERMISSIONS: Record<string, string[]> = {
   "/admin/orders": ["can_view_orders"],
   "/admin/menu": ["can_view_menu"],
   "/admin/customers": ["can_view_customers"],
-  "/admin/members": ["can_view_memberships"],
   "/admin/books": ["can_view_books"],
   "/admin/events": ["can_view_events"],
   "/admin/payments": ["can_view_payments"],

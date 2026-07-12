@@ -12,7 +12,6 @@ const initialCustomers = [
     email: "abebe@example.com",
     totalOrders: 12,
     lastOrderDate: "2026-06-25",
-    membership: "Monthly",
   },
   {
     id: 2,
@@ -21,7 +20,6 @@ const initialCustomers = [
     email: "meron@example.com",
     totalOrders: 5,
     lastOrderDate: "2026-06-24",
-    membership: "None",
   },
   {
     id: 3,
@@ -30,7 +28,6 @@ const initialCustomers = [
     email: "dawit@example.com",
     totalOrders: 8,
     lastOrderDate: "2026-06-26",
-    membership: "Weekly",
   },
   {
     id: 4,
@@ -39,7 +36,6 @@ const initialCustomers = [
     email: "betty@example.com",
     totalOrders: 3,
     lastOrderDate: "2026-06-20",
-    membership: "None",
   },
   {
     id: 5,
@@ -48,7 +44,6 @@ const initialCustomers = [
     email: "yonas@example.com",
     totalOrders: 20,
     lastOrderDate: "2026-06-26",
-    membership: "Monthly",
   },
 ];
 
@@ -74,7 +69,6 @@ export default function CustomersPage() {
                 <th className="py-3 px-6 font-medium">Email</th>
                 <th className="py-3 px-6 font-medium">Total Orders</th>
                 <th className="py-3 px-6 font-medium">Last Order</th>
-                <th className="py-3 px-6 font-medium">Membership</th>
                 <th className="py-3 px-6 font-medium">Actions</th>
               </tr>
             </thead>
@@ -92,19 +86,6 @@ export default function CustomersPage() {
                   <td className="py-4 px-6 text-dark">{customer.totalOrders}</td>
                   <td className="py-4 px-6 text-dark/70">
                     {customer.lastOrderDate}
-                  </td>
-                  <td className="py-4 px-6">
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                        customer.membership === "Monthly"
-                          ? "bg-gold/20 text-gold-dark"
-                          : customer.membership === "Weekly"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-gray-100 text-gray-600"
-                      }`}
-                    >
-                      {customer.membership}
-                    </span>
                   </td>
                   <td className="py-4 px-6">
                     <div className="flex gap-2">

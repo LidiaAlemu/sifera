@@ -19,14 +19,6 @@ export default function SettingsPage() {
     instructions: "Upload your payment receipt for verification.",
   });
 
-  const [membershipSettings, setMembershipSettings] = useState({
-    terms:
-      "Membership is non-transferable. Benefits are valid for the duration of the selected plan.",
-    hourlyFrom: "100 Birr",
-    weeklyFrom: "1000 Birr",
-    monthlyFrom: "2000 Birr",
-  });
-
   const [eventDefaults, setEventDefaults] = useState({
     capacity: 25,
     registrationLimit: 2,
@@ -182,79 +174,6 @@ export default function SettingsPage() {
                 className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans resize-none"
               />
             </div>
-          </div>
-        </div>
-
-        {/* Membership Settings */}
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h2 className="text-xl font-serif font-semibold text-dark mb-4">
-            Membership Settings
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-sans font-medium text-dark mb-1">
-                Hourly (from)
-              </label>
-              <input
-                type="text"
-                value={membershipSettings.hourlyFrom}
-                onChange={(e) =>
-                  setMembershipSettings({
-                    ...membershipSettings,
-                    hourlyFrom: e.target.value,
-                  })
-                }
-                className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-sans font-medium text-dark mb-1">
-                Weekly (from)
-              </label>
-              <input
-                type="text"
-                value={membershipSettings.weeklyFrom}
-                onChange={(e) =>
-                  setMembershipSettings({
-                    ...membershipSettings,
-                    weeklyFrom: e.target.value,
-                  })
-                }
-                className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-sans font-medium text-dark mb-1">
-                Monthly (from)
-              </label>
-              <input
-                type="text"
-                value={membershipSettings.monthlyFrom}
-                onChange={(e) =>
-                  setMembershipSettings({
-                    ...membershipSettings,
-                    monthlyFrom: e.target.value,
-                  })
-                }
-                className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
-              />
-            </div>
-          </div>
-          <div>
-            <label className="block text-sm font-sans font-medium text-dark mb-1">
-              Membership Terms
-            </label>
-            <textarea
-              value={membershipSettings.terms}
-              onChange={(e) =>
-                setMembershipSettings({
-                  ...membershipSettings,
-                  terms: e.target.value,
-                })
-              }
-              rows={3}
-              className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans resize-none"
-            />
           </div>
         </div>
 

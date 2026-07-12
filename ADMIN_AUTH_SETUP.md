@@ -11,7 +11,7 @@ This implementation uses a **permission-based authentication system** with datab
 Stores staff member information separate from auth metadata:
 - `id` - UUID primary key
 - `user_id` - Reference to auth.users
-- `role` - Owner, Manager, Cashier, Staff, Marketing
+- `role` - Admin, Manager, Customer
 - `branch` - Branch assignment (optional)
 - `status` - active, suspended, terminated
 - `hire_date` - Date hired
@@ -45,10 +45,6 @@ Maps roles to permissions:
 - `can_manage_customers` - Add and edit customers
 - `can_delete_customers` - Delete customers
 
-### Memberships
-- `can_view_memberships` - View membership information
-- `can_manage_memberships` - Create and edit memberships
-
 ### Books
 - `can_view_books` - View books
 - `can_manage_books` - Add, edit, delete books
@@ -79,34 +75,34 @@ Maps roles to permissions:
 
 ## Role Permissions Matrix
 
-| Permission | Owner | Manager | Cashier | Staff | Marketing |
-|------------|-------|---------|---------|-------|-----------|
-| can_view_menu | ✅ | ✅ | ✅ | ✅ | ✅ |
-| can_manage_menu | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_view_orders | ✅ | ✅ | ✅ | ✅ | ❌ |
-| can_manage_orders | ✅ | ✅ | ✅ | ❌ | ❌ |
-| can_refund_orders | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_view_customers | ✅ | ✅ | ✅ | ✅ | ✅ |
-| can_manage_customers | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_delete_customers | ✅ | ❌ | ❌ | ❌ | ❌ |
-| can_view_memberships | ✅ | ✅ | ✅ | ✅ | ✅ |
-| can_manage_memberships | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_view_books | ✅ | ✅ | ❌ | ✅ | ✅ |
-| can_manage_books | ✅ | ✅ | ❌ | ❌ | ✅ |
-| can_view_events | ✅ | ✅ | ❌ | ✅ | ✅ |
-| can_manage_events | ✅ | ✅ | ❌ | ❌ | ✅ |
-| can_delete_events | ✅ | ❌ | ❌ | ❌ | ✅ |
-| can_view_payments | ✅ | ✅ | ✅ | ✅ | ❌ |
-| can_manage_payments | ✅ | ✅ | ✅ | ❌ | ❌ |
-| can_refund_payments | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_view_analytics | ✅ | ✅ | ❌ | ❌ | ✅ |
-| can_export_analytics | ✅ | ❌ | ❌ | ❌ | ✅ |
-| can_view_staff | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_manage_staff | ✅ | ❌ | ❌ | ❌ | ❌ |
-| can_delete_staff | ✅ | ❌ | ❌ | ❌ | ❌ |
-| can_manage_permissions | ✅ | ❌ | ❌ | ❌ | ❌ |
-| can_view_settings | ✅ | ✅ | ❌ | ❌ | ❌ |
-| can_manage_settings | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Permission | Admin | Manager | Customer |
+|------------|-------|---------|----------|
+| can_view_menu | ✅ | ✅ | ❌ |
+| can_manage_menu | ✅ | ✅ | ❌ |
+| can_view_orders | ✅ | ✅ | ❌ |
+| can_manage_orders | ✅ | ✅ | ❌ |
+| can_refund_orders | ✅ | ✅ | ❌ |
+| can_view_customers | ✅ | ✅ | ❌ |
+| can_manage_customers | ✅ | ✅ | ❌ |
+| can_delete_customers | ✅ | ✅ | ❌ |
+| can_view_books | ✅ | ✅ | ❌ |
+| can_manage_books | ✅ | ✅ | ❌ |
+| can_view_events | ✅ | ✅ | ❌ |
+| can_manage_events | ✅ | ✅ | ❌ |
+| can_delete_events | ✅ | ✅ | ❌ |
+| can_view_payments | ✅ | ✅ | ❌ |
+| can_manage_payments | ✅ | ✅ | ❌ |
+| can_refund_payments | ✅ | ✅ | ❌ |
+| can_view_analytics | ✅ | ✅ | ❌ |
+| can_export_analytics | ✅ | ✅ | ❌ |
+| can_view_staff | ✅ | ✅ | ❌ |
+| can_manage_staff | ✅ | ✅ | ❌ |
+| can_delete_staff | ✅ | ✅ | ❌ |
+| can_manage_permissions | ✅ | ✅ | ❌ |
+| can_view_settings | ✅ | ✅ | ❌ |
+| can_manage_settings | ✅ | ✅ | ❌ |
+
+**Note:** Admin and Manager have equal permissions. Customer role is for website users only and has no admin access.
 
 ## Setup Instructions
 
@@ -212,11 +208,9 @@ export default function MenuButton() {
 
 ### 3. Test Role-Based Access
 Create test users with different roles and verify:
-- Owner can access all admin routes
-- Manager cannot manage staff or settings
-- Cashier can only access orders, payments, and basic customer info
-- Staff has view-only access
-- Marketing can access events, books, and analytics
+- Admin can access all admin routes
+- Manager has equal permissions to Admin
+- Customer cannot access any admin routes (website users only)
 
 ### 4. Test Permission Checks
 Use the utility functions to verify permissions are correctly assigned based on roles.

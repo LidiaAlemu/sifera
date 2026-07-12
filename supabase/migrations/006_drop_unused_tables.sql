@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS menu_item_images CASCADE;
 DROP TABLE IF EXISTS menu_item_tags CASCADE;
 DROP TABLE IF EXISTS payment_receipts CASCADE;
 DROP TABLE IF EXISTS order_status_history CASCADE;
-DROP TABLE IF EXISTS membership_history CASCADE;
 DROP TABLE IF EXISTS book_views CASCADE;
 DROP TABLE IF EXISTS event_checkins CASCADE;
 DROP TABLE IF EXISTS event_registrations CASCADE;

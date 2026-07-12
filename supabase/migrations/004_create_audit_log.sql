@@ -7,7 +7,7 @@ CREATE TABLE audit_logs (
   user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   staff_id UUID REFERENCES staff(id) ON DELETE SET NULL,
   action TEXT NOT NULL, -- e.g., 'create', 'update', 'delete'
-  table_name TEXT NOT NULL, -- e.g., 'orders', 'menu_items', 'membership_plans'
+  table_name TEXT NOT NULL, -- e.g., 'orders', 'menu_items', 'books'
   record_id UUID, -- ID of the affected record
   old_values JSONB, -- Previous values (for updates/deletes)
   new_values JSONB, -- New values (for creates/updates)

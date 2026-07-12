@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 
-export type StaffRole = "Owner" | "Manager" | "Cashier" | "Staff" | "Marketing";
+export type StaffRole = "Admin" | "Manager" | "Customer";
 export type StaffStatus = "active" | "suspended" | "terminated";
 
 export interface StaffMember {
@@ -167,14 +167,13 @@ export async function hasAnyRole(roles: StaffRole[]): Promise<boolean> {
 
 /**
  * Get role hierarchy level (higher number = more privileges)
+ * Admin and Manager have equal permissions
  */
 function getRoleLevel(role: StaffRole): number {
   const levels: Record<StaffRole, number> = {
-    Owner: 5,
-    Manager: 4,
-    Cashier: 3,
-    Marketing: 2,
-    Staff: 1,
+    Admin: 2,
+    Manager: 2,
+    Customer: 1,
   };
   return levels[role] || 0;
 }

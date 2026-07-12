@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS permissions (
 
 -- Create role_permissions junction table
 CREATE TABLE IF NOT EXISTS role_permissions (
-  role TEXT NOT NULL CHECK (role IN ('Owner', 'Manager', 'Cashier', 'Staff', 'Marketing')),
+  role TEXT NOT NULL CHECK (role IN ('Admin', 'Manager', 'Customer')),
   permission_id UUID NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   PRIMARY KEY (role, permission_id)
@@ -89,55 +89,15 @@ INSERT INTO permissions (name, description, category) VALUES
 ON CONFLICT (name) DO NOTHING;
 
 -- Assign permissions to roles
--- Owner: All permissions
+-- Admin: All permissions (equal to Manager)
 INSERT INTO role_permissions (role, permission_id)
-SELECT 'Owner', id FROM permissions
+SELECT 'Admin', id FROM permissions
 ON CONFLICT DO NOTHING;
 
--- Manager: Most permissions except staff management and settings
+-- Manager: All permissions (equal to Admin)
 INSERT INTO role_permissions (role, permission_id)
-SELECT 'Manager', id FROM permissions 
-WHERE name NOT IN ('can_manage_staff', 'can_delete_staff', 'can_manage_permissions', 'can_manage_settings')
+SELECT 'Manager', id FROM permissions
 ON CONFLICT DO NOTHING;
 
--- Cashier: Orders, payments, and basic customer access
-INSERT INTO role_permissions (role, permission_id)
-SELECT 'Cashier', id FROM permissions 
-WHERE name IN (
-  'can_view_menu',
-  'can_view_orders',
-  'can_manage_orders',
-  'can_view_customers',
-  'can_view_payments',
-  'can_manage_payments'
-)
-ON CONFLICT DO NOTHING;
-
--- Staff: View-only access to most areas
-INSERT INTO role_permissions (role, permission_id)
-SELECT 'Staff', id FROM permissions 
-WHERE name IN (
-  'can_view_menu',
-  'can_view_orders',
-  'can_view_customers',
-  'can_view_books',
-  'can_view_events',
-  'can_view_payments'
-)
-ON CONFLICT DO NOTHING;
-
--- Marketing: Events, books, and analytics
-INSERT INTO role_permissions (role, permission_id)
-SELECT 'Marketing', id FROM permissions 
-WHERE name IN (
-  'can_view_menu',
-  'can_view_customers',
-  'can_view_books',
-  'can_manage_books',
-  'can_view_events',
-  'can_manage_events',
-  'can_delete_events',
-  'can_view_analytics',
-  'can_export_analytics'
-)
-ON CONFLICT DO NOTHING;
+-- Customer: No admin permissions (website users only)
+-- No role_permissions entries needed for Customer

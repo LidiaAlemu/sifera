@@ -2,7 +2,7 @@
 CREATE TABLE IF NOT EXISTS staff (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  role TEXT NOT NULL CHECK (role IN ('Owner', 'Manager', 'Cashier', 'Staff', 'Marketing')),
+  role TEXT NOT NULL CHECK (role IN ('Admin', 'Manager', 'Customer')),
   branch TEXT,
   status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'terminated')),
   hire_date DATE,

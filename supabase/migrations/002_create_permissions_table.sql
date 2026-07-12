@@ -59,10 +59,6 @@ INSERT INTO permissions (name, description, category) VALUES
   ('can_manage_customers', 'Can add and edit customers', 'customers'),
   ('can_delete_customers', 'Can delete customers', 'customers'),
   
-  -- Memberships permissions
-  ('can_view_memberships', 'Can view membership information', 'memberships'),
-  ('can_manage_memberships', 'Can create and edit memberships', 'memberships'),
-  
   -- Books permissions
   ('can_view_books', 'Can view books', 'books'),
   ('can_manage_books', 'Can add, edit, and delete books', 'books'),
@@ -112,7 +108,6 @@ WHERE name IN (
   'can_view_orders',
   'can_manage_orders',
   'can_view_customers',
-  'can_view_memberships',
   'can_view_payments',
   'can_manage_payments'
 )
@@ -125,7 +120,6 @@ WHERE name IN (
   'can_view_menu',
   'can_view_orders',
   'can_view_customers',
-  'can_view_memberships',
   'can_view_books',
   'can_view_events',
   'can_view_payments'
@@ -138,7 +132,6 @@ SELECT 'Marketing', id FROM permissions
 WHERE name IN (
   'can_view_menu',
   'can_view_customers',
-  'can_view_memberships',
   'can_view_books',
   'can_manage_books',
   'can_view_events',

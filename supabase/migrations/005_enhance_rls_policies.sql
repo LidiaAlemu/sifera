@@ -9,8 +9,6 @@ ALTER TABLE IF EXISTS menu_categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS books ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS book_categories ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS events ENABLE ROW LEVEL SECURITY;
-ALTER TABLE IF EXISTS membership_plans ENABLE ROW LEVEL SECURITY;
-ALTER TABLE IF EXISTS memberships ENABLE ROW LEVEL SECURITY;
 ALTER TABLE IF EXISTS settings ENABLE ROW LEVEL SECURITY;
 
 -- ORDERS TABLE POLICIES
@@ -339,83 +337,6 @@ CREATE POLICY "Staff can delete events"
     )
   );
 
--- MEMBERSHIP_PLANS TABLE POLICIES
--- Drop existing policies if they exist
-DROP POLICY IF EXISTS "Public can view membership plans" ON membership_plans;
-DROP POLICY IF EXISTS "Staff can view membership plans" ON membership_plans;
-DROP POLICY IF EXISTS "Staff can manage membership plans" ON membership_plans;
-DROP POLICY IF EXISTS "Service role bypass" ON membership_plans;
-
--- Public can view membership plans
-CREATE POLICY "Public can view membership plans"
-  ON membership_plans FOR SELECT
-  USING (true);
-
--- Staff with can_view_memberships can view all plans
-CREATE POLICY "Staff can view membership plans"
-  ON membership_plans FOR SELECT
-  USING (
-    auth.uid() IN (
-      SELECT s.user_id 
-      FROM staff s
-      JOIN role_permissions rp ON s.role = rp.role
-      JOIN permissions p ON rp.permission_id = p.id
-      WHERE s.user_id = auth.uid()
-      AND s.status = 'active'
-      AND p.name = 'can_view_memberships'
-    )
-  );
-
--- Staff with can_manage_memberships can manage plans
-CREATE POLICY "Staff can manage membership plans"
-  ON membership_plans FOR ALL
-  USING (
-    auth.uid() IN (
-      SELECT s.user_id 
-      FROM staff s
-      JOIN role_permissions rp ON s.role = rp.role
-      JOIN permissions p ON rp.permission_id = p.id
-      WHERE s.user_id = auth.uid()
-      AND s.status = 'active'
-      AND p.name = 'can_manage_memberships'
-    )
-  );
-
--- MEMBERSHIPS TABLE POLICIES
--- Drop existing policies if they exist
-DROP POLICY IF EXISTS "Staff can view memberships" ON memberships;
-DROP POLICY IF EXISTS "Staff can manage memberships" ON memberships;
-DROP POLICY IF EXISTS "Service role bypass" ON memberships;
-
--- Staff with can_view_memberships can view memberships
-CREATE POLICY "Staff can view memberships"
-  ON memberships FOR SELECT
-  USING (
-    auth.uid() IN (
-      SELECT s.user_id 
-      FROM staff s
-      JOIN role_permissions rp ON s.role = rp.role
-      JOIN permissions p ON rp.permission_id = p.id
-      WHERE s.user_id = auth.uid()
-      AND s.status = 'active'
-      AND p.name = 'can_view_memberships'
-    )
-  );
-
--- Staff with can_manage_memberships can manage memberships
-CREATE POLICY "Staff can manage memberships"
-  ON memberships FOR ALL
-  USING (
-    auth.uid() IN (
-      SELECT s.user_id 
-      FROM staff s
-      JOIN role_permissions rp ON s.role = rp.role
-      JOIN permissions p ON rp.permission_id = p.id
-      WHERE s.user_id = auth.uid()
-      AND s.status = 'active'
-      AND p.name = 'can_manage_memberships'
-    )
-  );
 
 -- SETTINGS TABLE POLICIES
 -- Drop existing policies if they exist
@@ -467,8 +388,6 @@ DROP POLICY IF EXISTS "Service role bypass" ON menu_categories;
 DROP POLICY IF EXISTS "Service role bypass" ON books;
 DROP POLICY IF EXISTS "Service role bypass" ON book_categories;
 DROP POLICY IF EXISTS "Service role bypass" ON events;
-DROP POLICY IF EXISTS "Service role bypass" ON membership_plans;
-DROP POLICY IF EXISTS "Service role bypass" ON memberships;
 DROP POLICY IF EXISTS "Service role bypass" ON settings;
 
 CREATE POLICY "Service role bypass"
@@ -485,9 +404,5 @@ CREATE POLICY "Service role bypass"
   ON book_categories FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "Service role bypass"
   ON events FOR ALL USING (auth.role() = 'service_role');
-CREATE POLICY "Service role bypass"
-  ON membership_plans FOR ALL USING (auth.role() = 'service_role');
-CREATE POLICY "Service role bypass"
-  ON memberships FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "Service role bypass"
   ON settings FOR ALL USING (auth.role() = 'service_role');

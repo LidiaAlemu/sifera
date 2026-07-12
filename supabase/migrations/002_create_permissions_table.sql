@@ -20,6 +20,9 @@ ALTER TABLE permissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE role_permissions ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for permissions
+DROP POLICY IF EXISTS "Service role can manage permissions" ON permissions;
+DROP POLICY IF EXISTS "Authenticated users can view permissions" ON permissions;
+
 CREATE POLICY "Service role can manage permissions"
   ON permissions FOR ALL
   USING (auth.role() = 'service_role');
@@ -29,6 +32,9 @@ CREATE POLICY "Authenticated users can view permissions"
   USING (auth.role() = 'authenticated');
 
 -- RLS Policies for role_permissions
+DROP POLICY IF EXISTS "Service role can manage role_permissions" ON role_permissions;
+DROP POLICY IF EXISTS "Authenticated users can view role_permissions" ON role_permissions;
+
 CREATE POLICY "Service role can manage role_permissions"
   ON role_permissions FOR ALL
   USING (auth.role() = 'service_role');

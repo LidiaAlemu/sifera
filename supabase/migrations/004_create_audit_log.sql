@@ -27,6 +27,10 @@ CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at DE
 ALTER TABLE audit_logs ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Service role can manage audit logs" ON audit_logs;
+DROP POLICY IF EXISTS "No direct access via RLS" ON audit_logs;
+
 -- Service role can manage all audit logs
 CREATE POLICY "Service role can manage audit logs"
   ON audit_logs FOR ALL

@@ -1,9 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
 
 export const runtime = 'nodejs';
 
 export async function middleware(request: NextRequest) {
-  // Temporarily disable Supabase session refresh to isolate redirect loop
+  // Only refresh session for admin routes to avoid redirect loop
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    return await updateSession(request);
+  }
+  
   return NextResponse.next();
 }
 

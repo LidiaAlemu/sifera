@@ -20,6 +20,10 @@ CREATE INDEX IF NOT EXISTS idx_staff_status ON staff(status);
 ALTER TABLE staff ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own staff record" ON staff;
+DROP POLICY IF EXISTS "Service role can manage all staff" ON staff;
+
 -- Allow authenticated users to read their own staff record
 CREATE POLICY "Users can view own staff record"
   ON staff FOR SELECT
@@ -40,6 +44,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Trigger to auto-update updated_at
+DROP TRIGGER IF EXISTS update_staff_updated_at ON staff;
 CREATE TRIGGER update_staff_updated_at
   BEFORE UPDATE ON staff
   FOR EACH ROW

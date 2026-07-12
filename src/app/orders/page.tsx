@@ -64,7 +64,7 @@ function OrdersContent() {
     if (!receiptFile || !order) return;
     setUploading(true);
     const formData = new FormData();
-    formData.append("order_id", order.id);
+    formData.append("order_number", order.order_number);
     formData.append("receipt", receiptFile);
 
     try {

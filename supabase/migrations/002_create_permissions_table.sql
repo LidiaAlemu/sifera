@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS permissions (
 
 -- Create role_permissions junction table
 CREATE TABLE IF NOT EXISTS role_permissions (
-  role TEXT NOT NULL CHECK (role IN ('Admin', 'Manager', 'Customer')),
+  role TEXT NOT NULL CHECK (role IN ('Admin', 'Manager')),
   permission_id UUID NOT NULL REFERENCES permissions(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
   PRIMARY KEY (role, permission_id)
@@ -98,6 +98,3 @@ ON CONFLICT DO NOTHING;
 INSERT INTO role_permissions (role, permission_id)
 SELECT 'Manager', id FROM permissions
 ON CONFLICT DO NOTHING;
-
--- Customer: No admin permissions (website users only)
--- No role_permissions entries needed for Customer

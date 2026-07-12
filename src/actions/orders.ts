@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { validateName, validatePhone, validateEmail } from "@/lib/validation";
+import { buildPricedOrderItems } from "@/lib/order-totals";
 
 export async function placeOrder(formData: {
   name: string;
@@ -9,7 +10,7 @@ export async function placeOrder(formData: {
   email?: string;
   pickupTime: string;
   paymentMethod: string;
-  items: { id: number; name: string; quantity: number; price: string }[];
+  items: { id: number; name?: string; quantity: number; price?: string }[];
 }) {
   // Input validation
   const nameValidation = validateName(formData.name, "Name");
@@ -50,25 +51,35 @@ export async function placeOrder(formData: {
     if (!item.id || typeof item.id !== "number") {
       throw new Error("Invalid item ID");
     }
-    if (!item.quantity || typeof item.quantity !== "number" || item.quantity < 1) {
+    if (
+      !item.quantity ||
+      typeof item.quantity !== "number" ||
+      !Number.isInteger(item.quantity) ||
+      item.quantity < 1
+    ) {
       throw new Error("Invalid item quantity");
-    }
-    if (!item.price || typeof item.price !== "string") {
-      throw new Error("Invalid item price");
     }
   }
 
   const supabase = await createClient();
+  const menuItemIds = Array.from(new Set(formData.items.map((item) => item.id)));
+  const { data: menuItems, error: menuItemsError } = await supabase
+    .from("menu_items")
+    .select("id, price")
+    .in("id", menuItemIds)
+    .eq("available", true);
+
+  if (menuItemsError) {
+    console.error("Menu item price fetch error:", menuItemsError);
+    throw new Error("Failed to validate order items");
+  }
+
+  const { pricedItems, subtotal } = buildPricedOrderItems(
+    formData.items,
+    menuItems ?? []
+  );
 
   const orderNumber = `SIF-${Date.now()}`;
-  const subtotal = formData.items.reduce((sum, item) => {
-    const priceNum = parseFloat(item.price.replace(/[^0-9.]/g, ""));
-    return sum + priceNum * item.quantity;
-  }, 0);
-
-  if (subtotal <= 0) {
-    throw new Error("Invalid order total");
-  }
 
   const { data: order, error: orderError } = await supabase
     .from("orders")
@@ -92,12 +103,12 @@ export async function placeOrder(formData: {
     throw new Error("Failed to place order");
   }
 
-  const orderItems = formData.items.map((item) => ({
+  const orderItems = pricedItems.map((item) => ({
     order_id: order.id,
-    menu_item_id: item.id,
+    menu_item_id: item.menuItemId,
     quantity: item.quantity,
-    unit_price: parseFloat(item.price.replace(/[^0-9.]/g, "")),
-    subtotal: parseFloat(item.price.replace(/[^0-9.]/g, "")) * item.quantity,
+    unit_price: item.unitPrice,
+    subtotal: item.subtotal,
   }));
 
   const { error: itemsError } = await supabase
@@ -106,6 +117,8 @@ export async function placeOrder(formData: {
 
   if (itemsError) {
     console.error("Order items insert error:", itemsError);
+    await supabase.from("orders").delete().eq("id", order.id);
+    throw new Error("Failed to place order");
   }
 
   return { orderNumber };

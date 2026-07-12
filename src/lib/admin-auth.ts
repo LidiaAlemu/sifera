@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { ROUTE_PERMISSIONS, canAccessAdminRoute } from "@/lib/admin-permissions";
 
-export type StaffRole = "Admin" | "Manager" | "Customer";
+export type StaffRole = "Admin" | "Manager";
 export type StaffStatus = "active" | "suspended" | "terminated";
 
 export interface StaffMember {
@@ -173,7 +174,6 @@ function getRoleLevel(role: StaffRole): number {
   const levels: Record<StaffRole, number> = {
     Admin: 2,
     Manager: 2,
-    Customer: 1,
   };
   return levels[role] || 0;
 }
@@ -191,20 +191,7 @@ export async function hasRoleAtLeast(minRole: StaffRole): Promise<boolean> {
   return getRoleLevel(adminUser.staff.role) >= getRoleLevel(minRole);
 }
 
-/**
- * Route permission mapping
- */
-export const ROUTE_PERMISSIONS: Record<string, string[]> = {
-  "/admin": ["can_view_analytics"],
-  "/admin/orders": ["can_view_orders"],
-  "/admin/menu": ["can_view_menu"],
-  "/admin/customers": ["can_view_customers"],
-  "/admin/books": ["can_view_books"],
-  "/admin/events": ["can_view_events"],
-  "/admin/payments": ["can_view_payments"],
-  "/admin/analytics": ["can_view_analytics"],
-  "/admin/settings": ["can_view_settings"],
-};
+export { ROUTE_PERMISSIONS };
 
 /**
  * Check if user can access a specific route
@@ -217,17 +204,13 @@ export async function canAccessRoute(pathname: string): Promise<boolean> {
 
   const adminUser = await getAdminUser();
   
-  // Customer role cannot access any admin routes
-  if (!adminUser || adminUser.staff.role === "Customer") {
+  if (!adminUser) {
     return false;
   }
 
-  const requiredPermissions = ROUTE_PERMISSIONS[pathname] || [];
-  
-  if (requiredPermissions.length === 0) {
-    // If no specific permissions required, Admin and Manager can access
-    return true;
-  }
-
-  return await hasAnyPermission(requiredPermissions);
+  return canAccessAdminRoute({
+    pathname,
+    role: adminUser.staff.role,
+    permissions: adminUser.permissions.map((permission) => permission.name),
+  });
 }

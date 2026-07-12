@@ -215,12 +215,18 @@ export async function canAccessRoute(pathname: string): Promise<boolean> {
     return true;
   }
 
+  const adminUser = await getAdminUser();
+  
+  // Customer role cannot access any admin routes
+  if (!adminUser || adminUser.staff.role === "Customer") {
+    return false;
+  }
+
   const requiredPermissions = ROUTE_PERMISSIONS[pathname] || [];
   
   if (requiredPermissions.length === 0) {
-    // If no specific permissions required, just check if user is admin
-    const adminUser = await getAdminUser();
-    return adminUser !== null;
+    // If no specific permissions required, Admin and Manager can access
+    return true;
   }
 
   return await hasAnyPermission(requiredPermissions);

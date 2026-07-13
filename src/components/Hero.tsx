@@ -29,53 +29,67 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-primary text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="flex flex-col md:flex-row items-center gap-12">
+    <section className="bg-gradient-to-br from-primary to-primary-dark text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column – Text & CTAs */}
-          <div className="flex-1 space-y-6 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight">
-              Coffee, Books &<br />
-              Meaningful Moments
-            </h1>
-            <p className="text-lg md:text-xl font-body text-cream max-w-xl mx-auto md:mx-0">
-              Enjoy great coffee, explore books, attend events and become part
-              of our community.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <div className="space-y-8 text-center md:text-left animate-fade-in-up">
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-bold leading-tight text-balance">
+                Coffee, Books &
+                <span className="text-accent"> Meaningful Moments</span>
+              </h1>
+              <p className="text-lg md:text-xl font-body text-white/80 max-w-xl mx-auto md:mx-0 leading-relaxed">
+                Discover a luxurious sanctuary where exceptional coffee, curated books, and vibrant community converge. Join us for moments that matter.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
               <Link
                 href="/menu"
-                className="px-8 py-3 bg-accent text-dark font-body font-semibold rounded-lg hover:bg-accent/80 transition-colors shadow-md"
+                className="px-8 py-3.5 bg-accent text-primary font-body font-semibold rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 transform inline-block text-center"
               >
-                Order Now
+                Explore Menu
+              </Link>
+              <Link
+                href="/events"
+                className="px-8 py-3.5 border-2 border-accent text-accent font-body font-semibold rounded-lg hover:bg-accent/10 transition-all duration-200 inline-block text-center"
+              >
+                Upcoming Events
               </Link>
             </div>
           </div>
 
           {/* Right Column – Carousel */}
-          <div className="flex-1 w-full">
-            <div className="relative w-full h-64 md:h-96 overflow-hidden rounded-xl shadow-xl">
+          <div className="w-full animate-fade-in">
+            <div className="relative w-full aspect-square md:aspect-auto md:h-96 overflow-hidden rounded-2xl shadow-2xl">
               {images.map((img, index) => (
-                <img
-                  key={index}
-                  src={img.src}
-                  alt={img.alt}
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
-                    index === current
-                      ? "opacity-100 translate-x-0"
-                      : "opacity-0 translate-x-8"
-                  }`}
-                />
+                <div key={index} className="absolute inset-0">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className={`w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                      index === current
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-105"
+                    }`}
+                  />
+                  {/* Overlay Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                </div>
               ))}
             </div>
+            
             {/* Dot Indicators */}
-            <div className="flex justify-center mt-4 space-x-2">
+            <div className="flex justify-center mt-6 gap-2">
               {images.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrent(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    index === current ? "bg-accent" : "bg-cream/50 hover:bg-cream"
+                  className={`rounded-full transition-all duration-300 ${
+                    index === current 
+                      ? "w-8 h-2 bg-accent shadow-md" 
+                      : "w-2 h-2 bg-white/40 hover:bg-white/60"
                   }`}
                   aria-label={`Slide ${index + 1}`}
                 />

@@ -5,9 +5,20 @@ import AuthProviderWrapper from "@/components/AuthProviderWrapper";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sifera",
+  title: "Sifera - Quiet Book Café & Community Space",
   description:
-    "A quiet book café and alternative space where coffee, books, and community meet.",
+    "A luxurious quiet book café where exceptional coffee, curated books, and vibrant community converge. Experience a sanctuary for readers, writers, and coffee enthusiasts.",
+  keywords: "café, book café, coffee shop, books, community, quiet space",
+  openGraph: {
+    title: "Sifera - Quiet Book Café & Community Space",
+    description: "A luxurious quiet book café where exceptional coffee, curated books, and vibrant community converge.",
+    type: "website",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+  },
 };
 
 export default function RootLayout({
@@ -16,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-background">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

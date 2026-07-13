@@ -45,24 +45,53 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="bg-cream py-16 md:py-20">
+    <section className="bg-background py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="mb-16 text-center">
+          <p className="text-sm font-body text-accent font-semibold tracking-wider uppercase mb-3">
+            Why Choose Sifera
+          </p>
+          <h2 className="text-4xl md:text-5xl font-heading font-bold text-foreground mb-6 text-balance">
+            Crafted for Every Moment
+          </h2>
+          <p className="text-lg font-body text-text-secondary max-w-2xl mx-auto">
+            Discover what makes Sifera your ideal sanctuary for coffee, books, and community.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <Link
               key={index}
               href={feature.href}
-              className="group bg-primary text-white rounded-xl shadow-sm hover:shadow-md p-8 text-center transition-all duration-300 hover:-translate-y-1"
+              className="group relative bg-card border border-border hover:border-accent/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 p-8"
             >
-              <div className="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-accent/20 text-accent group-hover:bg-accent group-hover:text-dark transition-colors mb-4">
-                {feature.icon}
+              {/* Top accent bar */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/0" />
+              
+              <div className="relative z-10">
+                <div className="mx-auto w-14 h-14 flex items-center justify-center rounded-full bg-accent/10 text-accent group-hover:bg-accent group-hover:text-primary transition-all duration-300 mb-6">
+                  {feature.icon}
+                </div>
+                
+                <h3 className="text-lg font-heading font-semibold text-foreground mb-3">
+                  {feature.label}
+                </h3>
+                
+                <p className="text-sm font-body text-text-secondary leading-relaxed">
+                  {feature.description}
+                </p>
+
+                {/* Hover arrow indicator */}
+                <div className="mt-4 text-accent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </div>
-              <h3 className="text-xl font-heading font-semibold text-white mb-2">
-                {feature.label}
-              </h3>
-              <p className="text-sm font-body text-cream/80">
-                {feature.description}
-              </p>
+
+              {/* Hover glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/0 to-accent/0 group-hover:from-accent/5 group-hover:to-accent/0 transition-all duration-300 rounded-xl" />
             </Link>
           ))}
         </div>

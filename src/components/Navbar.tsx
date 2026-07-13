@@ -22,26 +22,26 @@ export default function Navbar() {
   const { totalItems } = useCart();
 
   return (
-    <header className="bg-primary text-white shadow-sm">
+    <header className="sticky top-0 z-50 bg-primary text-white border-b border-border/20 shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-heading font-bold text-accent hover:text-accent/80 transition-colors"
+            className="text-2xl font-heading font-bold text-accent hover:text-accent transition-colors duration-200"
           >
             Sifera
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-body font-medium transition-colors duration-200 ${
+                className={`text-sm font-body font-medium relative transition-colors duration-200 pb-1 ${
                   pathname === link.href
-                    ? "text-accent border-b-2 border-accent pb-1"
+                    ? "text-accent after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-accent"
                     : "text-white hover:text-accent"
                 }`}
               >
@@ -51,11 +51,11 @@ export default function Navbar() {
           </div>
 
           {/* Cart + Auth Buttons (Desktop) */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center gap-4">
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative text-white hover:text-accent transition-colors"
+              className="relative text-white hover:text-accent transition-colors duration-200 hover:scale-110 transform"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +72,7 @@ export default function Navbar() {
                 />
               </svg>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-accent text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-accent text-primary text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-scale-in shadow-md">
                   {totalItems}
                 </span>
               )}
@@ -82,12 +82,12 @@ export default function Navbar() {
               <div className="w-16 h-8 bg-secondary rounded animate-pulse" />
             ) : user ? (
               <>
-                <span className="text-sm font-body text-cream">
+                <span className="text-sm font-body text-white">
                   {user.user_metadata?.full_name || user.email}
                 </span>
                 <button
                   onClick={signOut}
-                  className="text-sm font-body text-white hover:text-accent transition-colors"
+                  className="text-sm font-body text-white hover:text-accent transition-colors duration-200"
                 >
                   Logout
                 </button>
@@ -96,13 +96,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-sm font-body text-white hover:text-accent transition-colors"
+                  className="text-sm font-body text-white hover:text-accent transition-colors duration-200"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-4 py-2 bg-light text-dark text-sm font-body rounded-lg hover:bg-cream transition-colors"
+                  className="px-4 py-2 bg-accent text-primary text-sm font-body font-medium rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5"
                 >
                   Sign Up
                 </Link>
@@ -143,16 +143,16 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {mobileOpen && (
-          <div className="md:hidden pb-4 space-y-2">
+          <div className="md:hidden pb-4 space-y-2 animate-slide-in-down border-t border-border/20">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className={`block px-3 py-2 rounded-md text-base font-body ${
+                className={`block px-4 py-2.5 rounded-lg text-base font-body transition-colors duration-200 ${
                   pathname === link.href
-                    ? "bg-secondary text-accent"
-                    : "text-white hover:bg-secondary hover:text-accent"
+                    ? "bg-secondary/30 text-accent border-l-2 border-accent"
+                    : "text-white hover:bg-secondary/20 hover:text-accent"
                 }`}
               >
                 {link.label}
@@ -162,16 +162,16 @@ export default function Navbar() {
             <Link
               href="/cart"
               onClick={() => setMobileOpen(false)}
-              className="block px-3 py-2 text-base font-body text-white hover:bg-secondary rounded-md"
+              className="block px-4 py-2.5 text-base font-body text-white hover:bg-secondary/20 hover:text-accent rounded-lg transition-colors duration-200"
             >
               Cart ({totalItems})
             </Link>
-            <div className="pt-2 flex flex-col space-y-2">
+            <div className="pt-3 border-t border-border/20 mt-3 flex flex-col gap-2">
               {loading ? (
-                <div className="px-3 py-2 text-sm text-cream">Loading…</div>
+                <div className="px-4 py-2.5 text-sm text-white">Loading…</div>
               ) : user ? (
                 <>
-                  <span className="px-3 py-2 text-sm text-cream">
+                  <span className="px-4 py-2.5 text-sm text-white">
                     {user.user_metadata?.full_name || user.email}
                   </span>
                   <button
@@ -179,7 +179,7 @@ export default function Navbar() {
                       signOut();
                       setMobileOpen(false);
                     }}
-                    className="px-3 py-2 text-sm text-left text-white hover:bg-secondary rounded-md"
+                    className="px-4 py-2.5 text-sm text-left text-white hover:bg-secondary/20 hover:text-accent rounded-lg transition-colors duration-200"
                   >
                     Logout
                   </button>
@@ -189,14 +189,14 @@ export default function Navbar() {
                   <Link
                     href="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="px-3 py-2 text-sm font-body text-white hover:bg-secondary rounded-md"
+                    className="px-4 py-2.5 text-sm font-body text-white hover:bg-secondary/20 hover:text-accent rounded-lg transition-colors duration-200"
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileOpen(false)}
-                    className="px-3 py-2 text-sm font-body bg-light text-dark rounded-md hover:bg-cream text-center"
+                    className="px-4 py-2.5 text-sm font-body font-medium bg-accent text-primary rounded-lg hover:bg-accent/90 transition-all duration-200 text-center"
                   >
                     Sign Up
                   </Link>

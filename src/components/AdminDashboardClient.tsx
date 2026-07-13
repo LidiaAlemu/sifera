@@ -16,97 +16,136 @@ export default function AdminDashboardClient({ serverOrders }: { serverOrders: a
   const activeMembers = 24; // Mock for now; will connect to DB later
 
   return (
-    <div>
-      <h1 className="text-3xl font-serif font-bold text-dark mb-8">
-        Dashboard Overview
-      </h1>
-
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <p className="text-sm font-sans text-dark/50 mb-1">Pending Orders</p>
-          <p className="text-3xl font-serif font-bold text-amber-600">
-            {pendingCount}
-          </p>
-        </div>
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <p className="text-sm font-sans text-dark/50 mb-1">Active Members</p>
-          <p className="text-3xl font-serif font-bold text-blue-600">
-            {activeMembers}
-          </p>
-        </div>
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <p className="text-sm font-sans text-dark/50 mb-1">Orders Today</p>
-          <p className="text-3xl font-serif font-bold text-green-600">
-            {todayOrders}
-          </p>
-        </div>
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <p className="text-sm font-sans text-dark/50 mb-1">Today's Revenue</p>
-          <p className="text-3xl font-serif font-bold text-gold">
-            {todayRevenue} ETB
-          </p>
-        </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="border-b border-border pb-6">
+        <h1 className="text-4xl font-heading font-bold text-foreground mb-2">
+          Dashboard Overview
+        </h1>
+        <p className="text-text-secondary font-body">
+          Welcome back! Here&apos;s what&apos;s happening at Sifera today.
+        </p>
       </div>
 
-      {/* Recent Orders Table */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
-        <h2 className="text-xl font-serif font-semibold text-dark mb-4">
-          Recent Orders
-        </h2>
-        {orders.length === 0 ? (
-          <p className="text-sm font-sans text-dark/60">No orders yet.</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm font-sans">
-              <thead>
-                <tr className="text-left border-b border-beige-dark text-dark/60">
-                  <th className="pb-2 font-medium">Order #</th>
-                  <th className="pb-2 font-medium">Customer</th>
-                  <th className="pb-2 font-medium">Method</th>
-                  <th className="pb-2 font-medium">Total</th>
-                  <th className="pb-2 font-medium">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.slice(0, 5).map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-b border-beige-dark/50"
-                  >
-                    <td className="py-3 text-dark font-medium">
-                      {order.order_number}
-                    </td>
-                    <td className="py-3 text-dark">{order.guest_name}</td>
-                    <td className="py-3 text-dark">{order.payment_method}</td>
-                    <td className="py-3 text-dark">
-                      {order.total_amount} ETB
-                    </td>
-                    <td className="py-3">
-                      <span
-                        className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                          order.order_status === "Waiting Verification"
-                            ? "bg-amber-100 text-amber-700"
-                            : order.order_status === "Verified"
-                            ? "bg-blue-100 text-blue-700"
-                            : order.order_status === "Preparing"
-                            ? "bg-purple-100 text-purple-700"
-                            : order.order_status === "Ready"
-                            ? "bg-green-100 text-green-700"
-                            : order.order_status === "Completed"
-                            ? "bg-gray-100 text-gray-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
-                      >
-                        {order.order_status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* KPI Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          {
+            label: "Pending Orders",
+            value: pendingCount,
+            icon: "📋",
+            color: "warning",
+          },
+          {
+            label: "Active Members",
+            value: activeMembers,
+            icon: "👥",
+            color: "accent",
+          },
+          {
+            label: "Orders Today",
+            value: todayOrders,
+            icon: "☕",
+            color: "success",
+          },
+          {
+            label: "Today's Revenue",
+            value: `${todayRevenue} ETB`,
+            icon: "💰",
+            color: "accent",
+          },
+        ].map((kpi, idx) => (
+          <div
+            key={idx}
+            className="bg-card border border-border rounded-xl p-6 hover:border-accent/50 hover:shadow-md transition-all duration-300"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-body text-text-secondary mb-3">
+                  {kpi.label}
+                </p>
+                <p className="text-3xl font-heading font-bold text-foreground">
+                  {kpi.value}
+                </p>
+              </div>
+              <div className="text-2xl opacity-50">{kpi.icon}</div>
+            </div>
+            {/* Subtle accent line */}
+            <div className="mt-4 h-1 w-12 bg-gradient-to-r from-accent to-accent/0 rounded-full" />
           </div>
-        )}
+        ))}
+      </div>
+
+      {/* Recent Orders Section */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-all duration-300">
+        {/* Header */}
+        <div className="border-b border-border px-6 py-4 bg-primary/5">
+          <h2 className="text-xl font-heading font-semibold text-foreground flex items-center gap-3">
+            <span>📊</span>
+            Recent Orders
+          </h2>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          {orders.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-text-secondary font-body">No orders yet.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm font-body">
+                <thead>
+                  <tr className="border-b border-border text-text-secondary font-medium text-xs uppercase tracking-wider">
+                    <th className="pb-3 text-left">Order #</th>
+                    <th className="pb-3 text-left">Customer</th>
+                    <th className="pb-3 text-left">Method</th>
+                    <th className="pb-3 text-right">Total</th>
+                    <th className="pb-3 text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/50">
+                  {orders.slice(0, 5).map((order) => (
+                    <tr
+                      key={order.id}
+                      className="hover:bg-primary/5 transition-colors duration-200"
+                    >
+                      <td className="py-4 text-foreground font-medium">
+                        #{order.order_number}
+                      </td>
+                      <td className="py-4 text-foreground">{order.guest_name}</td>
+                      <td className="py-4 text-text-secondary">
+                        {order.payment_method}
+                      </td>
+                      <td className="py-4 text-right font-semibold text-foreground">
+                        {order.total_amount} ETB
+                      </td>
+                      <td className="py-4 text-center">
+                        <span
+                          className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                            order.order_status === "Waiting Verification"
+                              ? "bg-warning/10 text-warning border border-warning/30"
+                              : order.order_status === "Verified"
+                              ? "bg-accent/10 text-accent border border-accent/30"
+                              : order.order_status === "Preparing"
+                              ? "bg-secondary/10 text-secondary border border-secondary/30"
+                              : order.order_status === "Ready"
+                              ? "bg-success/10 text-success border border-success/30"
+                              : order.order_status === "Completed"
+                              ? "bg-muted/10 text-muted border border-muted/30"
+                              : "bg-error/10 text-error border border-error/30"
+                          }`}
+                        >
+                          {order.order_status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

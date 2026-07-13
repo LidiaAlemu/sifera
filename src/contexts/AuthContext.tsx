@@ -35,22 +35,29 @@ export default function AuthProvider({
       return;
     }
 
-    // Get initial session
-    supabase.auth.getSession().then((res: any) => {
-      const session = res?.data?.session ?? null;
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    try {
+      // Get initial session
+      supabase.auth.getSession().then((res: any) => {
+        const session = res?.data?.session ?? null;
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      }).catch(() => {
+        setLoading(false);
+      });
 
-    // Listen for auth changes
-    const onAuth = supabase.auth.onAuthStateChange((_event: any, session: any) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+      // Listen for auth changes
+      const onAuth = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+      });
 
-    return () => onAuth.data?.subscription?.unsubscribe();
+      return () => onAuth.data?.subscription?.unsubscribe();
+    } catch (error) {
+      console.warn("Auth initialization error:", error);
+      setLoading(false);
+    }
   }, []);
 
   const signOut = async () => {

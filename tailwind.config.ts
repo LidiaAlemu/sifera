@@ -7,15 +7,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm coffee brown palette - richer and less white
-        primary: "#5C4A3A", // Rich coffee brown
-        secondary: "#7A6350", // Medium coffee brown
-        accent: "#C9A86C", // Golden accent
-        cream: "#E8DCD0", // Warmer, less white cream
-        dark: "#2D2420", // Dark coffee
-        green: "#4A5D4E", // Muted green
-        light: "#D4C4B5", // Light brown/beige
-        yellow: "#D4A574", // For status badges
+        // Luxury coffee & book cafe palette - refined & modern
+        background: "#F5F1ED", // Sophisticated cream
+        foreground: "#2D2420", // Deep coffee text
+        primary: "#3D2817", // Rich, luxurious coffee brown
+        "primary-dark": "#2D1F10", // Darker primary for hover states
+        secondary: "#8B7355", // Elegant warm taupe
+        accent: "#D4AF6A", // Premium champagne gold
+        "text-secondary": "#6B5D54", // Subtle secondary text
+        border: "#DDD4CC", // Soft elegant dividers
+        card: "#FEFBF8", // Subtle card background
+        hover: "#3D2817", // For interactive states
+        success: "#6B8E6F", // Muted green
+        warning: "#D4A574", // Warm amber
+        error: "#B85C5C", // Muted red
+        muted: "#9E8E83", // Muted gray-brown
       },
       fontFamily: {
         heading: ['"Playfair Display"', "serif"],

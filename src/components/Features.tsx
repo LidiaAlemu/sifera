@@ -52,15 +52,15 @@ export default function Features() {
             <Link
               key={index}
               href={feature.href}
-              className="group bg-white rounded-xl shadow-sm hover:shadow-md p-8 text-center transition-all duration-300 hover:-translate-y-1"
+              className="group bg-primary text-white rounded-xl shadow-sm hover:shadow-md p-8 text-center transition-all duration-300 hover:-translate-y-1"
             >
-              <div className="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-olive/10 text-olive group-hover:bg-olive group-hover:text-white transition-colors mb-4">
+              <div className="mx-auto w-16 h-16 flex items-center justify-center rounded-full bg-accent/20 text-accent group-hover:bg-accent group-hover:text-dark transition-colors mb-4">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-serif font-semibold text-dark mb-2">
+              <h3 className="text-xl font-heading font-semibold text-white mb-2">
                 {feature.label}
               </h3>
-              <p className="text-sm font-sans text-dark/70">
+              <p className="text-sm font-body text-cream/80">
                 {feature.description}
               </p>
             </Link>

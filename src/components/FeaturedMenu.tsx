@@ -30,7 +30,7 @@ export default function FeaturedMenu() {
           {featuredItems.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+              className="bg-primary text-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
             >
               <div className="aspect-square overflow-hidden">
                 <img
@@ -40,7 +40,7 @@ export default function FeaturedMenu() {
                 />
               </div>
               <div className="p-4 flex justify-between items-center">
-                <h3 className="text-lg font-heading font-semibold text-dark">
+                <h3 className="text-lg font-heading font-semibold text-white">
                   {item.name}
                 </h3>
                 <span className="text-accent font-body font-bold text-lg">

@@ -29,23 +29,23 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-olive text-white">
+    <section className="bg-primary text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="flex flex-col md:flex-row items-center gap-12">
           {/* Left Column – Text & CTAs */}
           <div className="flex-1 space-y-6 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold leading-tight">
               Coffee, Books &<br />
               Meaningful Moments
             </h1>
-            <p className="text-lg md:text-xl font-sans text-cream max-w-xl mx-auto md:mx-0">
+            <p className="text-lg md:text-xl font-body text-cream max-w-xl mx-auto md:mx-0">
               Enjoy great coffee, explore books, attend events and become part
               of our community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <Link
                 href="/menu"
-                className="px-8 py-3 bg-gold text-dark font-sans font-semibold rounded-lg hover:bg-gold-dark transition-colors shadow-md"
+                className="px-8 py-3 bg-accent text-dark font-body font-semibold rounded-lg hover:bg-accent/80 transition-colors shadow-md"
               >
                 Order Now
               </Link>
@@ -75,7 +75,7 @@ export default function Hero() {
                   key={index}
                   onClick={() => setCurrent(index)}
                   className={`w-3 h-3 rounded-full transition-colors ${
-                    index === current ? "bg-gold" : "bg-cream/50 hover:bg-cream"
+                    index === current ? "bg-accent" : "bg-cream/50 hover:bg-cream"
                   }`}
                   aria-label={`Slide ${index + 1}`}
                 />

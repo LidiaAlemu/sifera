@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
@@ -32,8 +33,35 @@ const config: Config = {
         '22': '5.5rem',
         '88': '22rem',
       },
+      borderRadius: {
+        'full': '9999px',
+        'xl': '1rem',
+        'lg': '0.75rem',
+        'md': '0.5rem',
+        'sm': '0.25rem',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.btn': {
+          '@apply rounded-full font-semibold transition-all duration-200': {},
+        },
+        '.btn-primary': {
+          '@apply bg-primary text-white hover:bg-primary-dark hover:shadow-lg hover:-translate-y-0.5': {},
+        },
+        '.btn-secondary': {
+          '@apply bg-secondary text-white hover:bg-secondary/90 hover:shadow-lg hover:-translate-y-0.5': {},
+        },
+        '.btn-accent': {
+          '@apply bg-accent text-primary hover:bg-accent/90 hover:shadow-lg hover:-translate-y-0.5': {},
+        },
+        '.btn-outline': {
+          '@apply border-2 border-primary text-primary hover:bg-primary/5': {},
+        },
+      });
+    }),
+  ],
 };
 export default config;

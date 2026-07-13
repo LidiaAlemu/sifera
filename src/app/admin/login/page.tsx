@@ -4,6 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
+function ensureSupabase() {
+  if (!supabase) throw new Error("Supabase client not initialized. Ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in the browser environment.");
+  return supabase;
+}
+
 export const dynamic = 'force-dynamic';
 
 export default function AdminLoginPage() {
@@ -19,7 +24,8 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const client = ensureSupabase();
+      const { data, error } = await client.auth.signInWithPassword({
         email,
         password,
       });

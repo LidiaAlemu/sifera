@@ -1,35 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getAdminOrders } from "@/actions/admin/orders";
+import React from "react";
 
-export default function AdminDashboardClient() {
-  const [orders, setOrders] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+export default function AdminDashboardClient({ serverOrders }: { serverOrders: any[] }) {
+  const orders = serverOrders ?? [];
 
-  useEffect(() => {
-    getAdminOrders()
-      .then((data) => setOrders(data))
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="text-center py-10">
-        <p className="text-dark/60 font-sans">Loading dashboard…</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-10">
-        <p className="text-red-500 font-sans">Error: {error}</p>
-      </div>
-    );
-  }
 
   const pendingCount = orders.filter(
     (o) => o.order_status === "Waiting Verification"

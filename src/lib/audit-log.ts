@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { getAdminUser, hasPermission } from "@/lib/admin-auth";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export interface AuditLogEntry {
   user_id: string;
@@ -16,16 +16,15 @@ export interface AuditLogEntry {
  * Log an admin action for audit purposes
  */
 export async function logAuditAction(entry: AuditLogEntry): Promise<void> {
-  const supabase = await createClient();
   const headersList = await headers();
-  
-  const ipAddress = headersList.get("x-forwarded-for") || 
-                    headersList.get("x-real-ip") || 
-                    "unknown";
+
+  const ipAddress =
+    headersList.get("x-forwarded-for") || headersList.get("x-real-ip") || "unknown";
   const userAgent = headersList.get("user-agent") || "unknown";
 
   try {
-    await supabase.rpc("log_audit_action", {
+    const supabaseAdmin = getSupabaseAdmin();
+    await (supabaseAdmin as any).rpc("log_audit_action", {
       p_user_id: entry.user_id,
       p_staff_id: entry.staff_id,
       p_action: entry.action,
@@ -35,7 +34,7 @@ export async function logAuditAction(entry: AuditLogEntry): Promise<void> {
       p_new_values: entry.new_values || null,
       p_ip_address: ipAddress,
       p_user_agent: userAgent,
-    });
+    } as any);
   } catch (error) {
     // Log to console if database logging fails
     console.error("Failed to log audit action:", error);
@@ -48,16 +47,15 @@ export async function logAuditAction(entry: AuditLogEntry): Promise<void> {
  */
 export async function getAuditLogsForUser(userId: string, limit = 50) {
   const adminUser = await getAdminUser();
-  
+
   // Only allow users with can_manage_permissions to view audit logs
   if (!adminUser || !(await hasPermission("can_manage_permissions"))) {
     throw new Error("Unauthorized: You do not have permission to view audit logs");
   }
 
-  const supabase = await createClient();
-  
-  // Use service role to bypass RLS for audit logs
-  const { data, error } = await supabase
+  // Use service-role client to bypass RLS for audit logs
+  const supabaseAdmin = getSupabaseAdmin();
+  const { data, error } = await supabaseAdmin
     .from("audit_logs")
     .select("*")
     .eq("user_id", userId)
@@ -77,16 +75,15 @@ export async function getAuditLogsForUser(userId: string, limit = 50) {
  */
 export async function getAuditLogsForTable(tableName: string, limit = 50) {
   const adminUser = await getAdminUser();
-  
+
   // Only allow users with can_manage_permissions to view audit logs
   if (!adminUser || !(await hasPermission("can_manage_permissions"))) {
     throw new Error("Unauthorized: You do not have permission to view audit logs");
   }
 
-  const supabase = await createClient();
-  
-  // Use service role to bypass RLS for audit logs
-  const { data, error } = await supabase
+  // Use service-role client to bypass RLS for audit logs
+  const supabaseAdmin = getSupabaseAdmin();
+  const { data, error } = await supabaseAdmin
     .from("audit_logs")
     .select("*")
     .eq("table_name", tableName)

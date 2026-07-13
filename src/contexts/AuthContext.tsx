@@ -31,22 +31,21 @@ export default function AuthProvider({
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then((res: any) => {
+      const session = res?.data?.session ?? null;
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
     // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    const onAuth = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => onAuth.data?.subscription?.unsubscribe();
   }, []);
 
   const signOut = async () => {

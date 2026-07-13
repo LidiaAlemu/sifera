@@ -11,8 +11,23 @@ import {
 export async function uploadReceipt(formData: FormData) {
   const supabase = await createClient();
 
-  const orderNumber = normalizeOrderNumber(formData.get("order_number"));
-  const file = formData.get("receipt") as File;
+  const rawOrderNumber = formData.get("order_number");
+  if (!rawOrderNumber || typeof rawOrderNumber !== "string") {
+    throw new Error("Order number is required");
+  }
+
+  const orderNumber = normalizeOrderNumber(rawOrderNumber);
+
+  const fileVal = formData.get("receipt");
+  if (!fileVal) {
+    throw new Error("Receipt file is required");
+  }
+
+  // In Next server actions, File is available; do a best-effort type check
+  const file = fileVal as File;
+  if (typeof (file as any).size !== "number") {
+    throw new Error("Invalid receipt file");
+  }
 
   validateReceiptFile(file);
 
@@ -22,16 +37,18 @@ export async function uploadReceipt(formData: FormData) {
     .eq("order_number", orderNumber)
     .single();
 
-  if (orderError) {
+  if (orderError || !order) {
     console.error("Receipt order lookup error:", orderError);
+    throw new Error("Order not found");
   }
+
   assertOrderCanReceiveReceipt(order, orderNumber);
 
   const fileName = buildReceiptStoragePath(order.id, orderNumber, file);
-  const { error: uploadError } = await supabase.storage
+  const { data: uploadData, error: uploadError } = await supabase.storage
     .from("receipts")
     .upload(fileName, file, {
-      contentType: file.type,
+      contentType: (file as any).type,
       upsert: false,
     });
 
@@ -42,7 +59,16 @@ export async function uploadReceipt(formData: FormData) {
 
   // Get public URL
   const { data: urlData } = supabase.storage.from("receipts").getPublicUrl(fileName);
-  const receiptUrl = urlData.publicUrl;
+  const receiptUrl = urlData?.publicUrl;
+  if (!receiptUrl) {
+    // Attempt cleanup
+    try {
+      await supabase.storage.from("receipts").remove([fileName]);
+    } catch {
+      // ignore
+    }
+    throw new Error("Failed to obtain receipt URL");
+  }
 
   const { error: receiptError } = await supabase
     .from("payment_receipts")
@@ -50,9 +76,9 @@ export async function uploadReceipt(formData: FormData) {
       order_id: order.id,
       receipt_url: receiptUrl,
       storage_path: fileName,
-      file_name: file.name,
-      file_type: file.type,
-      file_size: file.size,
+      file_name: (file as any).name,
+      file_type: (file as any).type,
+      file_size: (file as any).size,
       payment_reference: "",
       verification_status: "Pending",
     });

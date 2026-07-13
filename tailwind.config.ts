@@ -7,15 +7,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        olive: "#5A5B44",
-        cream: "#F3EEE7",
-        dark: "#2F2B24",
-        gold: "#C7A86A",
-        beige: "#E8D8C1",
+        // Warm earthy palette from design
+        primary: "#8B7355", // Warm brown
+        secondary: "#A67B5B", // Lighter brown
+        accent: "#D4A574", // Golden brown
+        cream: "#F5F0E6", // Off-white cream
+        dark: "#2C2420", // Dark brown
+        green: "#4A5D4E", // Muted green
+        light: "#E8DDD0", // Light beige
+        yellow: "#EAB308", // For status badges
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', "serif"],
-        sans: ["Inter", "sans-serif"],
+        heading: ['"Playfair Display"', "serif"],
+        body: ["Inter", "sans-serif"],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '88': '22rem',
       },
     },
   },

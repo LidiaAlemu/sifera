@@ -4,19 +4,21 @@
 
 @layer base {
   :root {
-    --olive: #5A5B44;
-    --cream: #F3EEE7;
-    --dark: #2F2B24;
-    --gold: #C7A86A;
-    --beige: #E8D8C1;
+    --primary: #8B7355;
+    --secondary: #A67B5B;
+    --accent: #D4A574;
+    --cream: #F5F0E6;
+    --dark: #2C2420;
+    --green: #4A5D4E;
+    --light: #E8DDD0;
   }
 
   body {
-    @apply bg-cream text-dark font-sans;
+    @apply bg-cream text-dark font-body;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+    @apply font-heading;
   }
 }
 

@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/menu", label: "Menu" },
   { href: "/books", label: "Books" },
   { href: "/events", label: "Events" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -21,13 +22,13 @@ export default function Navbar() {
   const { totalItems } = useCart();
 
   return (
-    <header className="bg-olive text-white shadow-sm">
+    <header className="bg-primary text-white shadow-sm">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
             href="/"
-            className="text-2xl font-serif font-bold text-gold hover:text-gold-light transition-colors"
+            className="text-2xl font-heading font-bold text-accent hover:text-accent/80 transition-colors"
           >
             Sifera
           </Link>
@@ -38,10 +39,10 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-sans font-medium transition-colors duration-200 ${
+                className={`text-sm font-body font-medium transition-colors duration-200 ${
                   pathname === link.href
-                    ? "text-gold border-b-2 border-gold pb-1"
-                    : "text-white hover:text-gold-light"
+                    ? "text-accent border-b-2 border-accent pb-1"
+                    : "text-white hover:text-accent"
                 }`}
               >
                 {link.label}
@@ -54,7 +55,7 @@ export default function Navbar() {
             {/* Cart */}
             <Link
               href="/cart"
-              className="relative text-white hover:text-gold-light transition-colors"
+              className="relative text-white hover:text-accent transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -71,22 +72,22 @@ export default function Navbar() {
                 />
               </svg>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-gold text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-accent text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
             </Link>
 
             {loading ? (
-              <div className="w-16 h-8 bg-olive-dark rounded animate-pulse" />
+              <div className="w-16 h-8 bg-secondary rounded animate-pulse" />
             ) : user ? (
               <>
-                <span className="text-sm font-sans text-cream">
+                <span className="text-sm font-body text-cream">
                   {user.user_metadata?.full_name || user.email}
                 </span>
                 <button
                   onClick={signOut}
-                  className="text-sm font-sans text-white hover:text-gold-light transition-colors"
+                  className="text-sm font-body text-white hover:text-accent transition-colors"
                 >
                   Logout
                 </button>
@@ -95,13 +96,13 @@ export default function Navbar() {
               <>
                 <Link
                   href="/login"
-                  className="text-sm font-sans text-white hover:text-gold-light transition-colors"
+                  className="text-sm font-body text-white hover:text-accent transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-4 py-2 bg-beige text-dark text-sm font-sans rounded-lg hover:bg-beige-dark transition-colors"
+                  className="px-4 py-2 bg-light text-dark text-sm font-body rounded-lg hover:bg-cream transition-colors"
                 >
                   Sign Up
                 </Link>
@@ -112,7 +113,7 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-white hover:text-gold-light"
+            className="md:hidden p-2 text-white hover:text-accent"
             aria-label="Toggle menu"
           >
             <svg
@@ -148,10 +149,10 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className={`block px-3 py-2 rounded-md text-base font-sans ${
+                className={`block px-3 py-2 rounded-md text-base font-body ${
                   pathname === link.href
-                    ? "bg-olive-dark text-gold"
-                    : "text-white hover:bg-olive-dark hover:text-gold-light"
+                    ? "bg-secondary text-accent"
+                    : "text-white hover:bg-secondary hover:text-accent"
                 }`}
               >
                 {link.label}
@@ -161,7 +162,7 @@ export default function Navbar() {
             <Link
               href="/cart"
               onClick={() => setMobileOpen(false)}
-              className="block px-3 py-2 text-base font-sans text-white hover:bg-olive-dark rounded-md"
+              className="block px-3 py-2 text-base font-body text-white hover:bg-secondary rounded-md"
             >
               Cart ({totalItems})
             </Link>
@@ -178,7 +179,7 @@ export default function Navbar() {
                       signOut();
                       setMobileOpen(false);
                     }}
-                    className="px-3 py-2 text-sm text-left text-white hover:bg-olive-dark rounded-md"
+                    className="px-3 py-2 text-sm text-left text-white hover:bg-secondary rounded-md"
                   >
                     Logout
                   </button>
@@ -188,14 +189,14 @@ export default function Navbar() {
                   <Link
                     href="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="px-3 py-2 text-sm font-sans text-white hover:bg-olive-dark rounded-md"
+                    className="px-3 py-2 text-sm font-body text-white hover:bg-secondary rounded-md"
                   >
                     Login
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileOpen(false)}
-                    className="px-3 py-2 text-sm font-sans bg-beige text-dark rounded-md hover:bg-beige-dark text-center"
+                    className="px-3 py-2 text-sm font-body bg-light text-dark rounded-md hover:bg-cream text-center"
                   >
                     Sign Up
                   </Link>

@@ -7,14 +7,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm earthy palette from design - more muted and natural
-        primary: "#6B5B4F", // Muted warm brown
-        secondary: "#8B7355", // Medium brown
-        accent: "#C4A77D", // Soft golden brown
-        cream: "#F7F2EB", // Warm cream
-        dark: "#3D3530", // Dark brown
-        green: "#5C6B5F", // Muted sage green
-        light: "#E8E0D5", // Light beige
+        // Warm coffee brown palette - richer and less white
+        primary: "#5C4A3A", // Rich coffee brown
+        secondary: "#7A6350", // Medium coffee brown
+        accent: "#C9A86C", // Golden accent
+        cream: "#E8DCD0", // Warmer, less white cream
+        dark: "#2D2420", // Dark coffee
+        green: "#4A5D4E", // Muted green
+        light: "#D4C4B5", // Light brown/beige
         yellow: "#D4A574", // For status badges
       },
       fontFamily: {

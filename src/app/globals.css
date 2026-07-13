@@ -4,21 +4,86 @@
 
 @layer base {
   :root {
-    --primary: #5C4A3A;
-    --secondary: #7A6350;
-    --accent: #C9A86C;
-    --cream: #E8DCD0;
-    --dark: #2D2420;
-    --green: #4A5D4E;
-    --light: #D4C4B5;
+    --primary: #3D2817;
+    --primary-dark: #2D1F10;
+    --secondary: #8B7355;
+    --accent: #D4AF6A;
+    --background: #F5F1ED;
+    --foreground: #2D2420;
+    --text-secondary: #6B5D54;
+    --border: #DDD4CC;
+    --card: #FEFBF8;
+    --success: #6B8E6F;
+    --warning: #D4A574;
+    --error: #B85C5C;
+    --muted: #9E8E83;
   }
 
   body {
-    @apply bg-cream text-dark font-body;
+    @apply bg-background text-foreground font-body;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
+  }
+
+  /* Utility classes for animations */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out;
+  }
+
+  .animate-slide-in-down {
+    animation: slide-in-down 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out;
   }
 }
 

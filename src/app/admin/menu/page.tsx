@@ -116,35 +116,39 @@ export default function AdminMenuPage() {
   };
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
-        <h1 className="text-3xl font-serif font-bold text-dark">Menu Management</h1>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <h1 className="text-4xl font-heading font-bold text-foreground">Menu Management</h1>
+          <p className="text-text-secondary font-body mt-1">Add, edit, or remove menu items</p>
+        </div>
         <button
           onClick={openAddModal}
-          className="px-4 py-2 bg-olive text-white text-sm font-sans rounded-lg hover:bg-olive-dark transition-colors"
+          className="px-6 py-2.5 bg-accent text-primary text-sm font-body font-semibold rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 w-fit"
         >
           + Add Item
         </button>
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-wrap gap-4 mb-6">
+      <div className="space-y-4">
         <input
           type="text"
-          placeholder="Search items..."
+          placeholder="Search items by name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 max-w-md px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+          className="w-full max-w-lg px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-card placeholder-text-secondary transition-all duration-200"
         />
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1 rounded-full text-xs font-sans font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-body font-medium transition-all duration-200 ${
                 activeCategory === cat
-                  ? "bg-olive text-white"
-                  : "bg-white text-dark border border-beige-dark hover:bg-beige"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card border border-border text-foreground hover:border-accent/50 hover:bg-primary/5"
               }`}
             >
               {cat}
@@ -154,55 +158,55 @@ export default function AdminMenuPage() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-all duration-300">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm font-sans">
+          <table className="w-full text-sm font-body">
             <thead>
-              <tr className="text-left border-b border-beige-dark text-dark/60 bg-beige/30">
-                <th className="py-3 px-4 font-medium">Image</th>
-                <th className="py-3 px-4 font-medium">Name</th>
-                <th className="py-3 px-4 font-medium">Category</th>
-                <th className="py-3 px-4 font-medium">Price (ETB)</th>
-                <th className="py-3 px-4 font-medium">Status</th>
-                <th className="py-3 px-4 font-medium">Actions</th>
+              <tr className="text-left border-b border-border text-text-secondary font-medium text-xs uppercase tracking-wider bg-primary/5">
+                <th className="py-4 px-4">Image</th>
+                <th className="py-4 px-4">Name</th>
+                <th className="py-4 px-4">Category</th>
+                <th className="py-4 px-4">Price (ETB)</th>
+                <th className="py-4 px-4">Status</th>
+                <th className="py-4 px-4">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border/50">
               {filtered.map((item) => (
-                <tr key={item.id} className="border-b border-beige-dark/50 hover:bg-cream/50 transition-colors">
-                  <td className="py-3 px-4">
+                <tr key={item.id} className="hover:bg-primary/5 transition-colors duration-200">
+                  <td className="py-4 px-4">
                     <img
                       src={item.image}
                       alt={item.name}
                       className="w-12 h-12 object-cover rounded-lg"
                     />
                   </td>
-                  <td className="py-3 px-4 font-medium text-dark">{item.name}</td>
-                  <td className="py-3 px-4 text-dark/70">{item.category}</td>
-                  <td className="py-3 px-4 text-dark">{item.price} ETB</td>
-                  <td className="py-3 px-4">
+                  <td className="py-4 px-4 font-semibold text-foreground">{item.name}</td>
+                  <td className="py-4 px-4 text-text-secondary">{item.category}</td>
+                  <td className="py-4 px-4 font-semibold text-foreground">{item.price} ETB</td>
+                  <td className="py-4 px-4">
                     <button
                       onClick={() => toggleAvailability(item.id)}
-                      className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors duration-200 ${
                         item.available
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-700"
+                          ? "bg-success/10 text-success border border-success/30 hover:bg-success/20"
+                          : "bg-error/10 text-error border border-error/30 hover:bg-error/20"
                       }`}
                     >
                       {item.available ? "Available" : "Unavailable"}
                     </button>
                   </td>
-                  <td className="py-3 px-4">
-                    <div className="flex gap-2">
+                  <td className="py-4 px-4">
+                    <div className="flex gap-3">
                       <button
                         onClick={() => openEditModal(item)}
-                        className="text-xs text-olive hover:underline"
+                        className="text-xs font-body font-semibold text-accent hover:text-accent/80 transition-colors duration-200"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(item.id)}
-                        className="text-xs text-red-500 hover:underline"
+                        className="text-xs font-body font-semibold text-error hover:text-error/80 transition-colors duration-200"
                       >
                         Delete
                       </button>
@@ -217,27 +221,28 @@ export default function AdminMenuPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 mx-4 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-serif font-bold text-dark mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-lg p-6 mx-4 max-h-[90vh] overflow-y-auto animate-scale-in">
+            <h2 className="text-2xl font-heading font-bold text-foreground mb-6">
               {editingItem ? "Edit Item" : "Add New Item"}
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Name</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Name</label>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background placeholder-text-secondary transition-all duration-200"
+                  placeholder="e.g., Vanilla Latte"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Category</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Category</label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background transition-all duration-200"
                 >
                   {categories.filter((c) => c !== "All").map((cat) => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -245,60 +250,63 @@ export default function AdminMenuPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Price (ETB)</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Price (ETB)</label>
                 <input
                   type="number"
                   value={form.price}
                   onChange={(e) => setForm({ ...form, price: e.target.value })}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background placeholder-text-secondary transition-all duration-200"
+                  placeholder="85"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Description</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Description</label>
                 <textarea
                   value={form.description}
                   onChange={(e) => setForm({ ...form, description: e.target.value })}
                   rows={3}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans resize-none"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background placeholder-text-secondary transition-all duration-200 resize-none"
+                  placeholder="Describe the item..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Image URL</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Image URL</label>
                 <input
                   type="text"
                   value={form.image}
                   onChange={(e) => setForm({ ...form, image: e.target.value })}
                   placeholder="https://example.com/image.jpg"
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background placeholder-text-secondary transition-all duration-200"
                 />
                 {form.image && (
                   <img
                     src={form.image}
                     alt="Preview"
-                    className="mt-2 h-32 object-cover rounded-lg"
+                    className="mt-3 h-32 w-full object-cover rounded-lg border border-border"
                   />
                 )}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 pt-2">
                 <input
                   type="checkbox"
+                  id="available-check"
                   checked={form.available}
                   onChange={(e) => setForm({ ...form, available: e.target.checked })}
-                  className="accent-olive"
+                  className="w-4 h-4 rounded border-border text-accent"
                 />
-                <label className="text-sm font-sans text-dark">Available</label>
+                <label htmlFor="available-check" className="text-sm font-body text-foreground">Mark as available</label>
               </div>
             </div>
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-8">
               <button
                 onClick={handleSave}
-                className="flex-1 py-2 bg-olive text-white font-sans rounded-lg hover:bg-olive-dark transition-colors"
+                className="flex-1 py-2.5 bg-accent text-primary font-body font-semibold rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-md"
               >
-                Save
+                Save Changes
               </button>
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 py-2 border border-beige-dark text-dark font-sans rounded-lg hover:bg-beige transition-colors"
+                className="flex-1 py-2.5 border border-border text-foreground font-body font-semibold rounded-lg hover:bg-primary/5 transition-all duration-200"
               >
                 Cancel
               </button>

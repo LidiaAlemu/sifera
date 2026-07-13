@@ -51,48 +51,57 @@ export default function CustomersPage() {
   const [customers] = useState(initialCustomers);
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-serif font-bold text-dark">Customers</h1>
-        <button className="px-4 py-2 bg-olive text-white text-sm font-sans rounded-lg hover:bg-olive-dark transition-colors">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <h1 className="text-4xl font-heading font-bold text-foreground">Customer Management</h1>
+          <p className="text-text-secondary font-body mt-1">View and manage registered customers</p>
+        </div>
+        <button className="px-6 py-2.5 bg-accent text-primary text-sm font-body font-semibold rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 w-fit">
           + Add Customer
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      {/* Customers Table */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-all duration-300">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm font-sans">
+          <table className="w-full text-sm font-body">
             <thead>
-              <tr className="text-left border-b border-beige-dark text-dark/60 bg-beige/30">
-                <th className="py-3 px-6 font-medium">Name</th>
-                <th className="py-3 px-6 font-medium">Phone</th>
-                <th className="py-3 px-6 font-medium">Email</th>
-                <th className="py-3 px-6 font-medium">Total Orders</th>
-                <th className="py-3 px-6 font-medium">Last Order</th>
-                <th className="py-3 px-6 font-medium">Actions</th>
+              <tr className="text-left border-b border-border text-text-secondary font-medium text-xs uppercase tracking-wider bg-primary/5">
+                <th className="py-4 px-6">Name</th>
+                <th className="py-4 px-6">Phone</th>
+                <th className="py-4 px-6">Email</th>
+                <th className="py-4 px-6 text-center">Orders</th>
+                <th className="py-4 px-6">Last Order</th>
+                <th className="py-4 px-6">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border/50">
               {customers.map((customer) => (
                 <tr
                   key={customer.id}
-                  className="border-b border-beige-dark/50 hover:bg-cream/50 transition-colors"
+                  className="hover:bg-primary/5 transition-colors duration-200"
                 >
-                  <td className="py-4 px-6 font-medium text-dark">
+                  <td className="py-4 px-6 font-semibold text-foreground">
                     {customer.name}
                   </td>
-                  <td className="py-4 px-6 text-dark/70">{customer.phone}</td>
-                  <td className="py-4 px-6 text-dark/70">{customer.email}</td>
-                  <td className="py-4 px-6 text-dark">{customer.totalOrders}</td>
-                  <td className="py-4 px-6 text-dark/70">
+                  <td className="py-4 px-6 text-text-secondary font-body">{customer.phone}</td>
+                  <td className="py-4 px-6 text-text-secondary font-body">{customer.email}</td>
+                  <td className="py-4 px-6 text-center">
+                    <span className="inline-block px-3 py-1 bg-accent/10 text-accent border border-accent/30 rounded-full text-xs font-semibold">
+                      {customer.totalOrders}
+                    </span>
+                  </td>
+                  <td className="py-4 px-6 text-text-secondary font-body">
                     {customer.lastOrderDate}
                   </td>
                   <td className="py-4 px-6">
-                    <div className="flex gap-2">
-                      <button className="text-xs text-olive hover:underline">
-                        View
+                    <div className="flex gap-3">
+                      <button className="text-xs font-body font-semibold text-accent hover:text-accent/80 transition-colors duration-200">
+                        View Profile
                       </button>
-                      <button className="text-xs text-red-500 hover:underline">
+                      <button className="text-xs font-body font-semibold text-error hover:text-error/80 transition-colors duration-200">
                         Delete
                       </button>
                     </div>

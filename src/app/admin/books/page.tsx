@@ -118,35 +118,39 @@ export default function AdminBooksPage() {
   };
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
-        <h1 className="text-3xl font-serif font-bold text-dark">Books Management</h1>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-border pb-6">
+        <div>
+          <h1 className="text-4xl font-heading font-bold text-foreground">Books Management</h1>
+          <p className="text-text-secondary font-body mt-1">Manage library inventory and availability</p>
+        </div>
         <button
           onClick={openAddModal}
-          className="px-4 py-2 bg-olive text-white text-sm font-sans rounded-lg hover:bg-olive-dark transition-colors"
+          className="px-6 py-2.5 bg-accent text-primary text-sm font-body font-semibold rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 w-fit"
         >
           + Add Book
         </button>
       </div>
 
       {/* Search & Filters */}
-      <div className="flex flex-wrap gap-4 mb-6">
+      <div className="space-y-4">
         <input
           type="text"
           placeholder="Search by title or author..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 max-w-md px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+          className="w-full max-w-lg px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-card placeholder-text-secondary transition-all duration-200"
         />
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-3 py-1 rounded-full text-xs font-sans font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-body font-medium transition-all duration-200 ${
                 activeCategory === cat
-                  ? "bg-olive text-white"
-                  : "bg-white text-dark border border-beige-dark hover:bg-beige"
+                  ? "bg-primary text-white shadow-md"
+                  : "bg-card border border-border text-foreground hover:border-accent/50 hover:bg-primary/5"
               }`}
             >
               {cat}
@@ -155,59 +159,59 @@ export default function AdminBooksPage() {
         </div>
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+      {/* Books Table */}
+      <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-accent/50 transition-all duration-300">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm font-sans">
+          <table className="w-full text-sm font-body">
             <thead>
-              <tr className="text-left border-b border-beige-dark text-dark/60 bg-beige/30">
-                <th className="py-3 px-4 font-medium">Cover</th>
-                <th className="py-3 px-4 font-medium">Title</th>
-                <th className="py-3 px-4 font-medium">Author</th>
-                <th className="py-3 px-4 font-medium">Category</th>
-                <th className="py-3 px-4 font-medium">Status</th>
-                <th className="py-3 px-4 font-medium">Actions</th>
+              <tr className="text-left border-b border-border text-text-secondary font-medium text-xs uppercase tracking-wider bg-primary/5">
+                <th className="py-4 px-4">Cover</th>
+                <th className="py-4 px-4">Title</th>
+                <th className="py-4 px-4">Author</th>
+                <th className="py-4 px-4">Category</th>
+                <th className="py-4 px-4">Status</th>
+                <th className="py-4 px-4">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-border/50">
               {filtered.map((book) => (
                 <tr
                   key={book.id}
-                  className="border-b border-beige-dark/50 hover:bg-cream/50 transition-colors"
+                  className="hover:bg-primary/5 transition-colors duration-200"
                 >
-                  <td className="py-3 px-4">
+                  <td className="py-4 px-4">
                     <img
                       src={book.cover}
                       alt={book.title}
-                      className="w-10 h-14 object-cover rounded"
+                      className="w-10 h-14 object-cover rounded-lg"
                     />
                   </td>
-                  <td className="py-3 px-4 font-medium text-dark">{book.title}</td>
-                  <td className="py-3 px-4 text-dark/70">{book.author}</td>
-                  <td className="py-3 px-4 text-dark/70">{book.category}</td>
-                  <td className="py-3 px-4">
+                  <td className="py-4 px-4 font-semibold text-foreground">{book.title}</td>
+                  <td className="py-4 px-4 text-text-secondary">{book.author}</td>
+                  <td className="py-4 px-4 text-text-secondary">{book.category}</td>
+                  <td className="py-4 px-4">
                     <button
                       onClick={() => toggleAvailability(book.id)}
-                      className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors duration-200 ${
                         book.availability === "Available"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-amber-100 text-amber-700"
+                          ? "bg-success/10 text-success border border-success/30 hover:bg-success/20"
+                          : "bg-warning/10 text-warning border border-warning/30 hover:bg-warning/20"
                       }`}
                     >
                       {book.availability}
                     </button>
                   </td>
-                  <td className="py-3 px-4">
-                    <div className="flex gap-2">
+                  <td className="py-4 px-4">
+                    <div className="flex gap-3">
                       <button
                         onClick={() => openEditModal(book)}
-                        className="text-xs text-olive hover:underline"
+                        className="text-xs font-body font-semibold text-accent hover:text-accent/80 transition-colors duration-200"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(book.id)}
-                        className="text-xs text-red-500 hover:underline"
+                        className="text-xs font-body font-semibold text-error hover:text-error/80 transition-colors duration-200"
                       >
                         Delete
                       </button>
@@ -222,36 +226,38 @@ export default function AdminBooksPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg p-6 mx-4">
-            <h2 className="text-2xl font-serif font-bold text-dark mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-card border border-border rounded-xl shadow-2xl w-full max-w-lg p-6 mx-4 animate-scale-in">
+            <h2 className="text-2xl font-heading font-bold text-foreground mb-6">
               {editingBook ? "Edit Book" : "Add New Book"}
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Title</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Title</label>
                 <input
                   type="text"
                   value={form.title}
                   onChange={(e) => setForm({ ...form, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background placeholder-text-secondary transition-all duration-200"
+                  placeholder="Book title"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Author</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Author</label>
                 <input
                   type="text"
                   value={form.author}
                   onChange={(e) => setForm({ ...form, author: e.target.value })}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background placeholder-text-secondary transition-all duration-200"
+                  placeholder="Author name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">Category</label>
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">Category</label>
                 <select
                   value={form.category}
                   onChange={(e) => setForm({ ...form, category: e.target.value })}
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background transition-all duration-200"
                 >
                   {categories.filter((c) => c !== "All").map((cat) => (
                     <option key={cat} value={cat}>
@@ -261,31 +267,31 @@ export default function AdminBooksPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-dark mb-1">
-                  Availability
+                <label className="block text-sm font-body font-semibold text-foreground mb-2">
+                  Availability Status
                 </label>
                 <select
                   value={form.availability}
                   onChange={(e) =>
                     setForm({ ...form, availability: e.target.value })
                   }
-                  className="w-full px-4 py-2 border border-beige-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-olive text-dark font-sans"
+                  className="w-full px-4 py-2.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent text-foreground font-body bg-background transition-all duration-200"
                 >
                   <option value="Available">Available</option>
                   <option value="Borrowed">Borrowed</option>
                 </select>
               </div>
             </div>
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-8">
               <button
                 onClick={handleSave}
-                className="flex-1 py-2 bg-olive text-white font-sans rounded-lg hover:bg-olive-dark transition-colors"
+                className="flex-1 py-2.5 bg-accent text-primary font-body font-semibold rounded-lg hover:bg-accent/90 transition-all duration-200 hover:shadow-md"
               >
-                Save
+                Save Changes
               </button>
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 py-2 border border-beige-dark text-dark font-sans rounded-lg hover:bg-beige transition-colors"
+                className="flex-1 py-2.5 border border-border text-foreground font-body font-semibold rounded-lg hover:bg-primary/5 transition-all duration-200"
               >
                 Cancel
               </button>

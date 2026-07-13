@@ -4,13 +4,13 @@
 
 @layer base {
   :root {
-    --primary: #8B7355;
-    --secondary: #A67B5B;
-    --accent: #D4A574;
-    --cream: #F5F0E6;
-    --dark: #2C2420;
-    --green: #4A5D4E;
-    --light: #E8DDD0;
+    --primary: #6B5B4F;
+    --secondary: #8B7355;
+    --accent: #C4A77D;
+    --cream: #F7F2EB;
+    --dark: #3D3530;
+    --green: #5C6B5F;
+    --light: #E8E0D5;
   }
 
   body {

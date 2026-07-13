@@ -17,31 +17,13 @@ const featuredItems = [
     price: "95 ETB",
     image: "https://picsum.photos/400/400?random=12",
   },
-  {
-    id: 4,
-    name: "Cheesecake",
-    price: "120 ETB",
-    image: "https://picsum.photos/400/400?random=13",
-  },
-  {
-    id: 5,
-    name: "Club Sandwich",
-    price: "150 ETB",
-    image: "https://picsum.photos/400/400?random=14",
-  },
-  {
-    id: 6,
-    name: "Chocolate Cake",
-    price: "130 ETB",
-    image: "https://picsum.photos/400/400?random=15",
-  },
 ];
 
 export default function FeaturedMenu() {
   return (
-    <section className="bg-olive/5 py-16 md:py-20">
+    <section className="bg-primary/5 py-16 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-dark mb-12">
+        <h2 className="text-3xl md:text-4xl font-heading font-bold text-center text-dark mb-12">
           Featured Menu
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -58,10 +40,10 @@ export default function FeaturedMenu() {
                 />
               </div>
               <div className="p-4 flex justify-between items-center">
-                <h3 className="text-lg font-serif font-semibold text-dark">
+                <h3 className="text-lg font-heading font-semibold text-dark">
                   {item.name}
                 </h3>
-                <span className="text-gold font-sans font-bold text-lg">
+                <span className="text-accent font-body font-bold text-lg">
                   {item.price}
                 </span>
               </div>

@@ -7,15 +7,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Warm earthy palette from design
-        primary: "#8B7355", // Warm brown
-        secondary: "#A67B5B", // Lighter brown
-        accent: "#D4A574", // Golden brown
-        cream: "#F5F0E6", // Off-white cream
-        dark: "#2C2420", // Dark brown
-        green: "#4A5D4E", // Muted green
-        light: "#E8DDD0", // Light beige
-        yellow: "#EAB308", // For status badges
+        // Warm earthy palette from design - more muted and natural
+        primary: "#6B5B4F", // Muted warm brown
+        secondary: "#8B7355", // Medium brown
+        accent: "#C4A77D", // Soft golden brown
+        cream: "#F7F2EB", // Warm cream
+        dark: "#3D3530", // Dark brown
+        green: "#5C6B5F", // Muted sage green
+        light: "#E8E0D5", // Light beige
+        yellow: "#D4A574", // For status badges
       },
       fontFamily: {
         heading: ['"Playfair Display"', "serif"],

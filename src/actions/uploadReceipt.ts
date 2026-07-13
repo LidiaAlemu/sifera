@@ -44,7 +44,7 @@ export async function uploadReceipt(formData: FormData) {
 
   assertOrderCanReceiveReceipt(order, orderNumber);
 
-  const fileName = buildReceiptStoragePath(order.id, orderNumber, file);
+  const fileName = buildReceiptStoragePath(order!.id, orderNumber, file);
   const { data: uploadData, error: uploadError } = await supabase.storage
     .from("receipts")
     .upload(fileName, file, {
@@ -73,7 +73,7 @@ export async function uploadReceipt(formData: FormData) {
   const { error: receiptError } = await supabase
     .from("payment_receipts")
     .insert({
-      order_id: order.id,
+      order_id: order!.id,
       receipt_url: receiptUrl,
       storage_path: fileName,
       file_name: (file as any).name,

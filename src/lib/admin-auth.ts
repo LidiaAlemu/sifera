@@ -168,11 +168,11 @@ export async function hasAnyRole(roles: StaffRole[]): Promise<boolean> {
 
 /**
  * Get role hierarchy level (higher number = more privileges)
- * Admin and Manager have equal permissions
+ * Admin has higher privileges than Manager
  */
 function getRoleLevel(role: StaffRole): number {
   const levels: Record<StaffRole, number> = {
-    Admin: 2,
+    Admin: 3,
     Manager: 2,
   };
   return levels[role] || 0;

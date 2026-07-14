@@ -8,6 +8,11 @@ const ROUTE_PERMISSIONS = {
   "/admin/payments": ["can_view_payments"],
   "/admin/analytics": ["can_view_analytics"],
   "/admin/settings": ["can_view_settings"],
+  // Admin-only routes
+  "/admin/staff": ["can_manage_staff"],
+  "/admin/users": ["can_manage_users"],
+  "/admin/reports": ["can_view_reports"],
+  "/admin/security": ["can_view_security"],
 };
 
 function getRequiredPermissions(pathname) {

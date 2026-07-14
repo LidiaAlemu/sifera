@@ -5,15 +5,20 @@ import Link from "next/link";
 import { AdminUser } from "@/lib/admin-auth";
 
 const navItems = [
-  { href: "/admin", label: "Dashboard", icon: "📊" },
-  { href: "/admin/pos", label: "POS", icon: "🧾" },
-  { href: "/admin/menu", label: "Menu Management", icon: "☕" },
-  { href: "/admin/customers", label: "Customers & Members", icon: "👥" },
-  { href: "/admin/books", label: "Books", icon: "📚" },
-  { href: "/admin/events", label: "Events", icon: "📅" },
-  { href: "/admin/payments", label: "Payments", icon: "💳" },
-  { href: "/admin/analytics", label: "Analytics", icon: "📈" },
-  { href: "/admin/settings", label: "Settings", icon: "⚙️" },
+  { href: "/admin", label: "Dashboard", icon: "📊", roles: ["Admin", "Manager"] },
+  { href: "/admin/pos", label: "POS", icon: "🧾", roles: ["Admin", "Manager"] },
+  { href: "/admin/menu", label: "Menu Management", icon: "☕", roles: ["Admin", "Manager"] },
+  { href: "/admin/customers", label: "Customers & Members", icon: "👥", roles: ["Admin", "Manager"] },
+  { href: "/admin/books", label: "Books", icon: "📚", roles: ["Admin", "Manager"] },
+  { href: "/admin/events", label: "Events", icon: "📅", roles: ["Admin", "Manager"] },
+  { href: "/admin/payments", label: "Payments", icon: "💳", roles: ["Admin", "Manager"] },
+  { href: "/admin/analytics", label: "Analytics", icon: "📈", roles: ["Admin", "Manager"] },
+  { href: "/admin/settings", label: "Settings", icon: "⚙️", roles: ["Admin", "Manager"] },
+  // Admin-only items
+  { href: "/admin/staff", label: "Staff Management", icon: "👔", roles: ["Admin"] },
+  { href: "/admin/users", label: "User Management", icon: "👤", roles: ["Admin"] },
+  { href: "/admin/reports", label: "Reports", icon: "📋", roles: ["Admin"] },
+  { href: "/admin/security", label: "Security", icon: "🔒", roles: ["Admin"] },
 ];
 
 export default function AdminSidebar({ adminUser }: { adminUser: AdminUser }) {
@@ -31,23 +36,25 @@ export default function AdminSidebar({ adminUser }: { adminUser: AdminUser }) {
 
       {/* Navigation */}
       <nav className="flex-1 py-6 space-y-1 px-3 overflow-y-auto">
-        {navItems.map((item) => {
-          const isActive = pathname === item.href;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-body transition-all duration-200 relative ${
-                isActive
-                  ? "bg-accent/10 text-accent font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-accent before:rounded-r-lg"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <span className="text-lg">{item.icon}</span>
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
+        {navItems
+          .filter((item) => item.roles.includes(adminUser.staff.role))
+          .map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-body transition-all duration-200 relative ${
+                  isActive
+                    ? "bg-accent/10 text-accent font-medium before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-accent before:rounded-r-lg"
+                    : "text-white/70 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <span className="text-lg">{item.icon}</span>
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
       </nav>
 
       {/* Footer */}
